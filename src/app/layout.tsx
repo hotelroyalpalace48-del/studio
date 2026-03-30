@@ -1,3 +1,4 @@
+
 import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
@@ -8,9 +9,12 @@ import { PWAInstall } from '@/components/pwa-install';
 import { Clover } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Mogra Design Studio | Exquisite Boutique Fashion & Bespoke Tailoring',
-  description: 'Mogra Design Studio in Bhopal offers a curated collection of dress patterns, boutique items, and elegant fashion designs. Discover the essence of Nazaakat with our bespoke tailoring and ethnic wear.',
-  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal'],
+  title: {
+    default: 'Mogra Design Studio | Exquisite Boutique Fashion & Bespoke Tailoring',
+    template: '%s | Mogra Design Studio'
+  },
+  description: 'Mogra Design Studio in Bhopal offers a curated collection of dress patterns, boutique items, and elegant fashion designs. Discover the essence of Nazaakat with our bespoke tailoring and ethnic wear from the heart of Minal Residency.',
+  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal', 'Custom Dress Bhopal'],
   authors: [{ name: 'Mogra Design Studio' }],
   openGraph: {
     title: 'Mogra Design Studio | Exquisite Boutique Fashion',
