@@ -1,6 +1,7 @@
 
 "use client"
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingCart, User, Menu, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,13 +12,44 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useCart } from '@/hooks/use-cart'
+import { cn } from '@/lib/utils'
 
 export function Navbar() {
   const { cart } = useCart()
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0)
+  
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (typeof window !== 'undefined') {
+        const currentScrollY = window.scrollY
+        
+        // Only hide after scrolling down a bit (threshold of 100px)
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsVisible(false)
+        } else {
+          setIsVisible(true)
+        }
+        
+        setLastScrollY(currentScrollY)
+      }
+    }
+
+    window.addEventListener('scroll', controlNavbar)
+    return () => {
+      window.removeEventListener('scroll', controlNavbar)
+    }
+  }, [lastScrollY])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header 
+      className={cn(
+        "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-transform duration-300 ease-in-out",
+        !isVisible ? "-translate-y-full" : "translate-y-0"
+      )}
+    >
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center space-x-2">
