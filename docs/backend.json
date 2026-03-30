@@ -1,0 +1,788 @@
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user of the Mogra Design Studio application, storing their profile information and references to their addresses.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address, used for communication and as a primary identifier for the external authentication system.",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The user's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The user's last name."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The user's contact phone number."
+        },
+        "defaultShippingAddressId": {
+          "type": "string",
+          "description": "Reference to the user's default shipping address. (Relationship: UserProfile 1:1 Address)"
+        },
+        "defaultBillingAddressId": {
+          "type": "string",
+          "description": "Reference to the user's default billing address. (Relationship: UserProfile 1:1 Address)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user profile was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time the user profile was updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "firstName",
+        "lastName",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Address": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Address",
+      "type": "object",
+      "description": "Stores a physical address associated with a user, used for shipping and billing purposes.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Address entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile this address belongs to. (Relationship: UserProfile 1:N Address)"
+        },
+        "street1": {
+          "type": "string",
+          "description": "The primary street address line."
+        },
+        "street2": {
+          "type": "string",
+          "description": "The secondary street address line (e.g., apartment, suite number)."
+        },
+        "city": {
+          "type": "string",
+          "description": "The city of the address."
+        },
+        "state": {
+          "type": "string",
+          "description": "The state, province, or region of the address."
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "The postal code or ZIP code of the address."
+        },
+        "country": {
+          "type": "string",
+          "description": "The country of the address."
+        },
+        "addressType": {
+          "type": "string",
+          "description": "The type of address (e.g., 'Shipping', 'Billing')."
+        },
+        "label": {
+          "type": "string",
+          "description": "A user-defined label for the address (e.g., 'Home', 'Work')."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "street1",
+        "city",
+        "state",
+        "postalCode",
+        "country",
+        "addressType"
+      ]
+    },
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents a dress sample or boutique item available in the Mogra Design Studio catalog.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Product entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the product."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of the product."
+        },
+        "price": {
+          "type": "number",
+          "description": "The current selling price of the product."
+        },
+        "sku": {
+          "type": "string",
+          "description": "The Stock Keeping Unit (SKU) for inventory management."
+        },
+        "category": {
+          "type": "string",
+          "description": "The main category of the product (e.g., 'Dress Sample', 'Boutique Item')."
+        },
+        "subCategory": {
+          "type": "string",
+          "description": "A more specific sub-category of the product (e.g., 'Evening Wear', 'Casual')."
+        },
+        "material": {
+          "type": "string",
+          "description": "The primary material of the product."
+        },
+        "color": {
+          "type": "string",
+          "description": "The main color of the product."
+        },
+        "sizeAvailable": {
+          "type": "array",
+          "description": "An array of available sizes for the product (e.g., 'S', 'M', 'L', 'Free Size').",
+          "items": {
+            "type": "string"
+          }
+        },
+        "imageUrls": {
+          "type": "array",
+          "description": "An array of URLs pointing to images of the product.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stockQuantity": {
+          "type": "number",
+          "description": "The current quantity of the product available in stock."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the product was added to the catalog.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time the product information was updated.",
+          "format": "date-time"
+        },
+        "suggestedProductIds": {
+          "type": "array",
+          "description": "References to other products suggested as complementary accessories or design variations by the AI styling tool. (Relationship: Product N:N Product)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price",
+        "sku",
+        "category",
+        "imageUrls",
+        "stockQuantity",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Cart": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Cart",
+      "type": "object",
+      "description": "Represents a user's shopping cart, holding items they intend to purchase.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Cart entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who owns this cart. (Relationship: UserProfile 1:1 Cart)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the cart was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time the cart was updated (e.g., items added/removed).",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CartItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CartItem",
+      "type": "object",
+      "description": "Represents a specific product and its quantity within a user's shopping cart.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CartItem entity."
+        },
+        "cartId": {
+          "type": "string",
+          "description": "Reference to the Cart this item belongs to. (Relationship: Cart 1:N CartItem)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the Product added to the cart. (Relationship: Product 1:N CartItem)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "The quantity of the product in the cart."
+        },
+        "priceAtAddition": {
+          "type": "number",
+          "description": "The price of the product at the time it was added to the cart, to prevent price changes affecting existing cart items."
+        }
+      },
+      "required": [
+        "id",
+        "cartId",
+        "productId",
+        "quantity",
+        "priceAtAddition"
+      ]
+    },
+    "Order": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Order",
+      "type": "object",
+      "description": "Represents a completed or in-progress purchase made by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Order entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who placed the order. (Relationship: UserProfile 1:N Order)"
+        },
+        "orderDate": {
+          "type": "string",
+          "description": "The date and time when the order was placed.",
+          "format": "date-time"
+        },
+        "totalAmount": {
+          "type": "number",
+          "description": "The total monetary amount of the order, including discounts and taxes."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the order (e.g., 'Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled')."
+        },
+        "shippingAddressId": {
+          "type": "string",
+          "description": "Reference to the Address used for shipping this order. (Relationship: Address 1:N Order)"
+        },
+        "billingAddressId": {
+          "type": "string",
+          "description": "Reference to the Address used for billing this order. (Relationship: Address 1:N Order)"
+        },
+        "paymentStatus": {
+          "type": "string",
+          "description": "The status of the payment for this order (e.g., 'Paid', 'Pending', 'Failed', 'Refunded')."
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "The method used for payment (e.g., 'Credit Card', 'UPI', 'Net Banking')."
+        },
+        "discountCodeId": {
+          "type": "string",
+          "description": "Optional reference to the Discount applied to this order. (Relationship: Discount 1:N Order)"
+        },
+        "expectedDeliveryDate": {
+          "type": "string",
+          "description": "The estimated date for delivery of the order.",
+          "format": "date-time"
+        },
+        "trackingNumber": {
+          "type": "string",
+          "description": "The tracking number provided by the shipping carrier for this order."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "orderDate",
+        "totalAmount",
+        "status",
+        "shippingAddressId",
+        "billingAddressId",
+        "paymentStatus",
+        "paymentMethod"
+      ]
+    },
+    "OrderItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "OrderItem",
+      "type": "object",
+      "description": "Represents a specific product and its quantity within a placed order, locking in the price at the time of purchase.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the OrderItem entity."
+        },
+        "orderId": {
+          "type": "string",
+          "description": "Reference to the Order this item belongs to. (Relationship: Order 1:N OrderItem)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the Product included in the order. (Relationship: Product 1:N OrderItem)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "The quantity of the product purchased in this order item."
+        },
+        "unitPriceAtOrder": {
+          "type": "number",
+          "description": "The unit price of the product at the time the order was placed, to ensure consistent pricing."
+        }
+      },
+      "required": [
+        "id",
+        "orderId",
+        "productId",
+        "quantity",
+        "unitPriceAtOrder"
+      ]
+    },
+    "Discount": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Discount",
+      "type": "object",
+      "description": "Represents a discount code or promotional coupon that can be applied to orders.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Discount entity."
+        },
+        "code": {
+          "type": "string",
+          "description": "The unique code customers use to apply the discount."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the discount's offer."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of discount (e.g., 'percentage' for a percentage off, 'fixed_amount' for a specific monetary deduction)."
+        },
+        "value": {
+          "type": "number",
+          "description": "The value of the discount (e.g., 0.15 for 15% off, or 10 for $10 off)."
+        },
+        "minimumOrderAmount": {
+          "type": "number",
+          "description": "The minimum order amount required for the discount to be applicable."
+        },
+        "usageLimit": {
+          "type": "number",
+          "description": "The maximum number of times this discount code can be used in total across all users."
+        },
+        "uses": {
+          "type": "number",
+          "description": "The current number of times this discount code has been used."
+        },
+        "validFrom": {
+          "type": "string",
+          "description": "The date and time from which the discount is valid.",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": "string",
+          "description": "The date and time until which the discount is valid.",
+          "format": "date-time"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "A boolean indicating whether the discount is currently active and usable."
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "description",
+        "type",
+        "value",
+        "usageLimit",
+        "uses",
+        "validFrom",
+        "validUntil",
+        "isActive"
+      ]
+    },
+    "ReturnRequest": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ReturnRequest",
+      "type": "object",
+      "description": "Records a customer's request to return one or more items from a previously placed order.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ReturnRequest entity."
+        },
+        "orderId": {
+          "type": "string",
+          "description": "Reference to the Order from which items are being returned. (Relationship: Order 1:N ReturnRequest)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who initiated the return request. (Relationship: UserProfile 1:N ReturnRequest)"
+        },
+        "requestDate": {
+          "type": "string",
+          "description": "The date and time when the return request was made.",
+          "format": "date-time"
+        },
+        "reason": {
+          "type": "string",
+          "description": "The customer's reason for returning the item(s) (e.g., 'Wrong Size', 'Defective', 'Changed Mind')."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the return request (e.g., 'Pending Approval', 'Approved', 'Denied', 'Refund Processed', 'Item Received')."
+        },
+        "returnItems": {
+          "type": "array",
+          "description": "An array detailing which specific OrderItems are being returned and their quantities. These are sub-objects, not nested entities.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "refundAmount": {
+          "type": "number",
+          "description": "The total monetary amount refunded for this return request."
+        },
+        "resolutionDate": {
+          "type": "string",
+          "description": "The date and time when the return request was resolved (e.g., refund processed, request denied).",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "orderId",
+        "userId",
+        "requestDate",
+        "reason",
+        "status",
+        "returnItems",
+        "refundAmount"
+      ]
+    },
+    "BespokeMeasurement": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BespokeMeasurement",
+      "type": "object",
+      "description": "Stores a user's specific body measurements for custom orders or personalized sizing recommendations.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the BespokeMeasurement entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile this set of measurements belongs to. (Relationship: UserProfile 1:N BespokeMeasurement)"
+        },
+        "measurementDate": {
+          "type": "string",
+          "description": "The date and time when these measurements were taken or last updated.",
+          "format": "date-time"
+        },
+        "chestCircumferenceCm": {
+          "type": "number",
+          "description": "Circumference of the chest in centimeters."
+        },
+        "waistCircumferenceCm": {
+          "type": "number",
+          "description": "Circumference of the waist in centimeters."
+        },
+        "hipCircumferenceCm": {
+          "type": "number",
+          "description": "Circumference of the hips in centimeters."
+        },
+        "shoulderWidthCm": {
+          "type": "number",
+          "description": "Width across the shoulders in centimeters."
+        },
+        "sleeveLengthCm": {
+          "type": "number",
+          "description": "Length of the sleeve (e.g., from shoulder to wrist) in centimeters."
+        },
+        "dressLengthCm": {
+          "type": "number",
+          "description": "Overall length of a dress (e.g., from shoulder to hem) in centimeters."
+        },
+        "neckToWaistCm": {
+          "type": "number",
+          "description": "Measurement from the base of the neck to the natural waistline in centimeters."
+        },
+        "inseamCm": {
+          "type": "number",
+          "description": "Measurement from the crotch to the ankle on the inside of the leg in centimeters."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any additional notes or specific instructions regarding these measurements."
+        },
+        "label": {
+          "type": "string",
+          "description": "A user-defined label for this set of measurements (e.g., 'Current', 'Spring 2024')."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "measurementDate",
+        "chestCircumferenceCm",
+        "waistCircumferenceCm",
+        "hipCircumferenceCm"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores individual user profiles. Access is strictly restricted to the authenticated user matching the '{userId}' in the path. This is private data following path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, matching 'UserProfile.id' and 'request.auth.uid'."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/addresses/{addressId}",
+        "definition": {
+          "entityName": "Address",
+          "schema": {
+            "$ref": "#/backend/entities/Address"
+          },
+          "description": "Stores physical addresses for a specific user. Access is restricted to the owner ('{userId}'). 'Address.userId' is implicitly denormalized via the path, ensuring authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user to whom the address belongs."
+            },
+            {
+              "name": "addressId",
+              "description": "The unique identifier for the address document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/cart",
+        "definition": {
+          "entityName": "Cart",
+          "schema": {
+            "$ref": "#/backend/entities/Cart"
+          },
+          "description": "Represents the single active shopping cart for a user. The document ID is a fixed string 'cart'. Access is restricted to the owner ('{userId}'). 'Cart.userId' is implicitly denormalized via the path, ensuring authorization independence for this 1:1 relationship.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who owns the cart."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/cart/items/{cartItemId}",
+        "definition": {
+          "entityName": "CartItem",
+          "schema": {
+            "$ref": "#/backend/entities/CartItem"
+          },
+          "description": "Contains individual items within a user's shopping cart. Access is restricted to the owner ('{userId}'). The 'userId' is denormalized via the path, ensuring authorization independence without needing to query the parent 'cart' document.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who owns the cart item."
+            },
+            {
+              "name": "cartItemId",
+              "description": "The unique identifier for the cart item document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}",
+        "definition": {
+          "entityName": "Order",
+          "schema": {
+            "$ref": "#/backend/entities/Order"
+          },
+          "description": "Records individual purchase orders made by a user. Access is restricted to the owner ('{userId}'). 'Order.userId' is implicitly denormalized via the path, ensuring authorization independence. Admin users may also have read access.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who placed the order."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique identifier for the order document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}/items/{orderItemId}",
+        "definition": {
+          "entityName": "OrderItem",
+          "schema": {
+            "$ref": "#/backend/entities/OrderItem"
+          },
+          "description": "Details the specific products within a user's order. Access is restricted to the owner ('{userId}'). The 'userId' is denormalized via the path, ensuring authorization independence without needing to query the parent 'order' document.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who owns the order item."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique identifier of the order this item belongs to."
+            },
+            {
+              "name": "orderItemId",
+              "description": "The unique identifier for the order item document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/returnRequests/{returnRequestId}",
+        "definition": {
+          "entityName": "ReturnRequest",
+          "schema": {
+            "$ref": "#/backend/entities/ReturnRequest"
+          },
+          "description": "Stores requests for returns made by a user. Access is restricted to the owner ('{userId}'). 'ReturnRequest.userId' is implicitly denormalized via the path, ensuring authorization independence. Admin users may also have read/write access.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who initiated the return request."
+            },
+            {
+              "name": "returnRequestId",
+              "description": "The unique identifier for the return request document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/bespokeMeasurements/{measurementId}",
+        "definition": {
+          "entityName": "BespokeMeasurement",
+          "schema": {
+            "$ref": "#/backend/entities/BespokeMeasurement"
+          },
+          "description": "Contains custom body measurements for a user. Access is highly private and restricted to the owner ('{userId}'). 'BespokeMeasurement.userId' is implicitly denormalized via the path, ensuring authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user to whom these measurements belong."
+            },
+            {
+              "name": "measurementId",
+              "description": "The unique identifier for the bespoke measurement document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Stores the catalog of dress samples and boutique items. Publicly readable for browsing. Admin users have full CRUD access. No specific authorization fields are needed at the document level for public read, adhering to structural segregation.",
+          "params": [
+            {
+              "name": "productId",
+              "description": "The unique identifier for the product document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/discounts/{discountId}",
+        "definition": {
+          "entityName": "Discount",
+          "schema": {
+            "$ref": "#/backend/entities/Discount"
+          },
+          "description": "Stores promotional discount codes. Publicly readable for essential details (code, value, validity) to apply to orders. Admin users have full CRUD access. Adheres to structural segregation for public and admin access.",
+          "params": [
+            {
+              "name": "discountId",
+              "description": "The unique identifier for the discount document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "A top-level collection to grant administrative privileges. The mere existence of a document at '/roles_admin/{userId}' grants the user with that ID admin status, following the 'Existence over Content' principle for global roles.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who is an administrator."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure for Mogra Design Studio prioritizes secure, scalable, and debuggable authorization by strictly adhering to the core design principles. \n\n**Authorization Independence (CRITICAL) & QAPs:**\nAll user-specific data (UserProfile, Addresses, Cart, CartItems, Orders, OrderItems, ReturnRequests, BespokeMeasurements) is nested under `/users/{userId}/...`. This leverages **Path-Based Ownership**, where the `{userId}` wildcard in the path directly corresponds to `request.auth.uid`. This design ensures that security rules for these collections can evaluate authorization solely based on the authenticated user's ID matching the path wildcard (e.g., `allow read, write: if request.auth.uid == userId;`). This eliminates the need for `get()` operations on parent documents to determine ownership, making rules atomic, simpler, and highly performant. For example, a `CartItem` at `/users/{userId}/cart/items/{cartItemId}` is authorized because `request.auth.uid` must match `{userId}` in the path, directly confirming ownership without needing to fetch the parent `Cart` or `UserProfile` document. This also inherently supports **Query-Able Paths (QAPs)** for user-specific data, as any `list` operation on these paths will be implicitly filtered by the `userId` in the path, preventing unauthorized data exposure. For `OrderItem` documents, although the schema includes `orderId`, access relies on `userId` from the path, making it authorization independent. While `CartItem` and `OrderItem` schemas don't explicitly list `userId`, their placement within the `/users/{userId}` hierarchy means the `userId` is effectively denormalized into their access path for rule evaluation.\n\n**Structural Segregation & Access Modeling:**\nPublicly accessible data like `Product` and `Discount` is placed in top-level collections (`/products/{productId}` and `/discounts/{discountId}`). This ensures **Structural Segregation**, where documents in these collections share a homogeneous security posture (publicly readable, admin-editable). Admin roles are managed via a dedicated top-level collection (`/roles_admin/{userId}`), using the **Existence over Content** model. The presence of a document for a `userId` in this collection grants administrative privileges, providing clear and easily debuggable DBAC (Database Access Control).\n\n**Data Clarity and Predictability:**\nThe structure employs descriptive wildcards (e.g., `{userId}`, `{orderId}`) and assumes explicit state modeling (e.g., `status` in Order and ReturnRequest entities). Relationships like `UserProfile 1:1 Cart` are handled by using a fixed document ID (`cart`) under the user's path (`/users/{userId}/cart`), making the relationship clear and secure. Overall, the design minimizes complexity in security rules, enhances performance, and ensures a robust and scalable Firestore foundation for Mogra Design Studio."
+  }
+}
