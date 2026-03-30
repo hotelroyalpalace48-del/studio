@@ -2,18 +2,19 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { CheckCircle2, ArrowRight, Loader2, MapPin, CreditCard, ShoppingBag } from 'lucide-react'
+import { CheckCircle2, ArrowRight, Loader2, MapPin, CreditCard, ShoppingBag, Smartphone, Landmark, QrCode } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { useCart } from '@/hooks/use-cart'
-import { useUser, useFirestore } from '@/firebase'
+import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase'
 import { collection, doc, serverTimestamp } from 'firebase/firestore'
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates'
 import { useToast } from '@/hooks/use-toast'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function CheckoutPage() {
   const { cart, total, clearCart } = useCart()
@@ -33,6 +34,9 @@ export default function CheckoutPage() {
     state: '',
     postalCode: ''
   })
+
+  const paymentDocRef = useMemoFirebase(() => doc(firestore, 'settings', 'payment'), [firestore])
+  const { data: paymentSettings, isLoading: isPaymentLoading } = useDoc(paymentDocRef)
 
   if (cart.length === 0 && step !== 3) {
     router.push('/shop')
@@ -150,27 +154,106 @@ export default function CheckoutPage() {
                 <CardTitle className="font-headline text-2xl flex items-center gap-2">
                   <CreditCard className="h-5 w-5 text-primary" /> Payment Method
                 </CardTitle>
-                <CardDescription>All transactions are secure and encrypted.</CardDescription>
+                <CardDescription>Select your preferred studio settlement method.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="p-4 border-2 border-primary bg-primary/5 rounded-xl flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <CreditCard className="h-6 w-6 text-primary" />
-                    <div>
-                      <p className="font-bold">Bespoke Boutique Credit</p>
-                      <p className="text-xs text-muted-foreground">Pay securely via Studio gateway</p>
-                    </div>
+              <CardContent className="space-y-8">
+                {isPaymentLoading ? (
+                  <div className="flex justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary/30" />
                   </div>
-                  <CheckCircle2 className="h-5 w-5 text-primary" />
-                </div>
+                ) : (
+                  <div className="space-y-6">
+                    {/* UPI Option */}
+                    {paymentSettings?.upiId && (
+                      <div className="space-y-4">
+                         <div className="p-4 border-2 border-primary bg-primary/5 rounded-xl flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <Smartphone className="h-6 w-6 text-primary" />
+                            <div>
+                              <p className="font-bold">Digital Payments (UPI)</p>
+                              <p className="text-xs text-muted-foreground">PhonePe, Paytm, GPay Accepted</p>
+                            </div>
+                          </div>
+                          <CheckCircle2 className="h-5 w-5 text-primary" />
+                        </div>
+                        
+                        <div className="bg-muted/30 p-6 rounded-2xl flex flex-col items-center gap-4 text-center">
+                          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Studio Scanner</p>
+                          <div className="w-48 h-48 bg-white p-2 rounded-xl border border-primary/10 luxury-shadow relative">
+                            {paymentSettings.qrCodeUrl ? (
+                              <Image 
+                                src={paymentSettings.qrCodeUrl} 
+                                alt="Payment QR" 
+                                fill 
+                                className="object-contain p-2"
+                                data-ai-hint="payment qr"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <QrCode className="h-12 w-12 text-primary/20" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-xs text-muted-foreground uppercase tracking-widest">UPI ID</p>
+                            <p className="font-bold text-primary select-all">{paymentSettings.upiId}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Bank Option */}
+                    {paymentSettings?.bankName && (
+                      <div className="p-6 bg-secondary/10 rounded-2xl border border-secondary space-y-4">
+                        <div className="flex items-center gap-3">
+                          <Landmark className="h-5 w-5 text-primary" />
+                          <p className="font-bold">Direct Bank Transfer</p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-y-4 text-sm">
+                          <div>
+                            <p className="text-[10px] uppercase font-bold text-muted-foreground">Bank Name</p>
+                            <p className="font-medium">{paymentSettings.bankName}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase font-bold text-muted-foreground">Account Holder</p>
+                            <p className="font-medium">{paymentSettings.accountHolder}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase font-bold text-muted-foreground">Account Number</p>
+                            <p className="font-medium select-all">{paymentSettings.accountNumber}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase font-bold text-muted-foreground">IFSC Code</p>
+                            <p className="font-medium select-all">{paymentSettings.ifscCode}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {!paymentSettings?.upiId && !paymentSettings?.bankName && (
+                       <div className="p-4 border-2 border-primary bg-primary/5 rounded-xl flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <CreditCard className="h-6 w-6 text-primary" />
+                          <div>
+                            <p className="font-bold">Bespoke Boutique Credit</p>
+                            <p className="text-xs text-muted-foreground">Pay securely via Studio gateway</p>
+                          </div>
+                        </div>
+                        <CheckCircle2 className="h-5 w-5 text-primary" />
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="bg-muted/30 p-4 rounded-lg text-sm italic text-muted-foreground">
-                  Note: This is a demonstration of the Mogra Studio checkout process. No actual funds will be transferred.
+                  Note: Please share a screenshot of your payment confirmation once completed to ensure priority processing.
                 </div>
+                
                 <div className="flex gap-4 pt-4">
                   <Button variant="outline" onClick={() => setStep(1)} className="flex-1 rounded-full py-6 uppercase tracking-widest text-xs font-bold">Back</Button>
                   <Button onClick={handlePlaceOrder} disabled={loading} className="flex-1 bg-primary hover:bg-primary/90 rounded-full py-6 uppercase tracking-widest text-xs font-bold">
                     {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ShoppingBag className="mr-2 h-4 w-4" />}
-                    Complete Purchase
+                    Confirm Order
                   </Button>
                 </div>
               </CardContent>

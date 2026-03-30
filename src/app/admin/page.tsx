@@ -1,8 +1,7 @@
-
 "use client"
 
-import { useState } from 'react'
-import { Plus, Trash2, Edit, Save, Loader2, Sparkles, Image as ImageIcon } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Plus, Trash2, Edit, Save, Loader2, Sparkles, Image as ImageIcon, CreditCard, Landmark, Smartphone, QrCode } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -11,24 +10,51 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { adminProductDescriptionGenerator } from '@/ai/flows/admin-product-description-generator'
 import { useToast } from '@/hooks/use-toast'
-import { useFirestore, useCollection, useMemoFirebase } from '@/firebase'
+import { useFirestore, useCollection, useDoc, useMemoFirebase } from '@/firebase'
 import { collection, doc, serverTimestamp, deleteDoc } from 'firebase/firestore'
 import { setDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates'
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(false)
   const [publishing, setPublishing] = useState(false)
+  const [savingSettings, setSavingSettings] = useState(false)
   const [keywords, setKeywords] = useState('')
   const [description, setDescription] = useState('')
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
   const [category, setCategory] = useState('')
   
+  // Payment Settings State
+  const [paymentSettings, setPaymentSettings] = useState({
+    upiId: '',
+    bankName: '',
+    accountNumber: '',
+    ifscCode: '',
+    accountHolder: '',
+    qrCodeUrl: ''
+  })
+
   const { toast } = useToast()
   const firestore = useFirestore()
 
   const productsQuery = useMemoFirebase(() => collection(firestore, 'products'), [firestore])
   const { data: products, isLoading: isProductsLoading } = useCollection(productsQuery)
+
+  const paymentDocRef = useMemoFirebase(() => doc(firestore, 'settings', 'payment'), [firestore])
+  const { data: existingPaymentSettings } = useDoc(paymentDocRef)
+
+  useEffect(() => {
+    if (existingPaymentSettings) {
+      setPaymentSettings({
+        upiId: existingPaymentSettings.upiId || '',
+        bankName: existingPaymentSettings.bankName || '',
+        accountNumber: existingPaymentSettings.accountNumber || '',
+        ifscCode: existingPaymentSettings.ifscCode || '',
+        accountHolder: existingPaymentSettings.accountHolder || '',
+        qrCodeUrl: existingPaymentSettings.qrCodeUrl || ''
+      })
+    }
+  }, [existingPaymentSettings])
 
   const handleGenerateDescription = async () => {
     if (!keywords) {
@@ -106,6 +132,24 @@ export default function AdminPage() {
     }, 500)
   }
 
+  const handleSavePaymentSettings = () => {
+    setSavingSettings(true)
+    const settingsRef = doc(firestore, 'settings', 'payment')
+    
+    setDocumentNonBlocking(settingsRef, {
+      ...paymentSettings,
+      updatedAt: serverTimestamp()
+    }, { merge: true })
+
+    setTimeout(() => {
+      setSavingSettings(false)
+      toast({
+        title: "Settings Saved",
+        description: "Payment details updated successfully."
+      })
+    }, 500)
+  }
+
   const handleDelete = (id: string) => {
     const productRef = doc(firestore, 'products', id)
     deleteDocumentNonBlocking(productRef)
@@ -120,15 +164,16 @@ export default function AdminPage() {
       <div className="flex flex-col md:flex-row justify-between items-baseline mb-12 gap-6">
         <div className="space-y-2">
           <h1 className="font-headline text-5xl font-bold">Studio Management</h1>
-          <p className="text-muted-foreground">Manage your boutique collections and designs.</p>
+          <p className="text-muted-foreground">Manage your boutique collections and studio configurations.</p>
         </div>
       </div>
 
       <Tabs defaultValue="add" className="space-y-8">
-        <TabsList className="bg-muted/50 rounded-full p-1">
-          <TabsTrigger value="add" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white">Add New Pattern</TabsTrigger>
-          <TabsTrigger value="inventory" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white">Inventory Control</TabsTrigger>
-          <TabsTrigger value="orders" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white">Studio Orders</TabsTrigger>
+        <TabsList className="bg-muted/50 rounded-full p-1 overflow-x-auto flex-nowrap">
+          <TabsTrigger value="add" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap">Add New Pattern</TabsTrigger>
+          <TabsTrigger value="inventory" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap">Inventory Control</TabsTrigger>
+          <TabsTrigger value="payment-settings" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap">Payment Settings</TabsTrigger>
+          <TabsTrigger value="orders" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap">Studio Orders</TabsTrigger>
         </TabsList>
 
         <TabsContent value="add" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -270,6 +315,102 @@ export default function AdminPage() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="payment-settings" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <Card className="border-none shadow-lg">
+              <CardHeader>
+                <CardTitle className="font-headline text-2xl flex items-center gap-2">
+                  <Smartphone className="h-5 w-5 text-primary" /> Digital Payments (UPI)
+                </CardTitle>
+                <CardDescription>Configure UPI IDs for PhonePe, Paytm, and GPay.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="upiId">Unified Payments ID (UPI ID)</Label>
+                  <Input 
+                    id="upiId" 
+                    value={paymentSettings.upiId} 
+                    onChange={(e) => setPaymentSettings({...paymentSettings, upiId: e.target.value})} 
+                    placeholder="e.g. mograstudio@okaxis" 
+                  />
+                  <p className="text-[10px] text-muted-foreground">This ID will be used for all UPI apps (PhonePe, Paytm, GPay).</p>
+                </div>
+                <div className="space-y-4">
+                  <Label>Payment Scanner (QR Code)</Label>
+                  <div className="border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center space-y-4 bg-muted/20">
+                    <QrCode className="h-10 w-10 text-muted-foreground/40" />
+                    <Input 
+                      type="text" 
+                      placeholder="QR Code Image URL" 
+                      value={paymentSettings.qrCodeUrl}
+                      onChange={(e) => setPaymentSettings({...paymentSettings, qrCodeUrl: e.target.value})}
+                      className="max-w-xs text-xs"
+                    />
+                    <p className="text-[10px] text-center text-muted-foreground">Provide a link to your studio's payment QR code.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-lg">
+              <CardHeader>
+                <CardTitle className="font-headline text-2xl flex items-center gap-2">
+                  <Landmark className="h-5 w-5 text-primary" /> Bank Transfer Details
+                </CardTitle>
+                <CardDescription>Traditional bank settlement information.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="accountHolder">Account Holder Name</Label>
+                  <Input 
+                    id="accountHolder" 
+                    value={paymentSettings.accountHolder} 
+                    onChange={(e) => setPaymentSettings({...paymentSettings, accountHolder: e.target.value})} 
+                    placeholder="MOGRA DESIGN STUDIO" 
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="bankName">Bank Name</Label>
+                  <Input 
+                    id="bankName" 
+                    value={paymentSettings.bankName} 
+                    onChange={(e) => setPaymentSettings({...paymentSettings, bankName: e.target.value})} 
+                    placeholder="e.g. State Bank of India" 
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="accountNumber">Account Number</Label>
+                    <Input 
+                      id="accountNumber" 
+                      value={paymentSettings.accountNumber} 
+                      onChange={(e) => setPaymentSettings({...paymentSettings, accountNumber: e.target.value})} 
+                      placeholder="00000012345678" 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="ifscCode">IFSC Code</Label>
+                    <Input 
+                      id="ifscCode" 
+                      value={paymentSettings.ifscCode} 
+                      onChange={(e) => setPaymentSettings({...paymentSettings, ifscCode: e.target.value})} 
+                      placeholder="SBIN0001234" 
+                    />
+                  </div>
+                </div>
+                <Button 
+                  onClick={handleSavePaymentSettings}
+                  disabled={savingSettings}
+                  className="w-full bg-primary hover:bg-primary/90 text-white rounded-full py-6 uppercase tracking-widest text-xs font-bold"
+                >
+                  {savingSettings ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="mr-2 h-4 w-4" />}
+                  Update Payment Settings
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

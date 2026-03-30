@@ -4,77 +4,34 @@ service cloud.firestore {
 
     /**
      * Mogra Design Studio - Security Rules Documentation
-     *
-     * CORE PHILOSOPHY
-     * This ruleset enforces a strict User-Ownership model for all personal data while providing
-     * public read access for the product catalog. Administrative access is managed through 
-     * a global role-based system.
-     *
-     * DATA STRUCTURE
-     * The hierarchy is primarily user-centric. Private data (profiles, addresses, carts, 
-     * orders, and bespoke measurements) is nested under /users/{userId}/... for 
-     * efficient path-based authorization. Public resources like products and discounts 
-     * reside in top-level collections.
-     *
-     * KEY SECURITY DECISIONS
-     * 1. Path-Based Ownership: Authorization for user data relies on the {userId} wildcard 
-     *    in the path matching the authenticated user's UID.
-     * 2. Administrative Roles: Global admins are identified by the existence of a document 
-     *    matching their UID in the /roles_admin/ collection.
-     * 3. Relational Integrity: On document creation, the rules enforce that internal 
-     *    foreign keys (like userId) match the secure path wildcard.
-     * 4. Structural Segregation: Public data (Products/Discounts) and Private data (Orders/Profiles) 
-     *    are separated to prevent accidental exposure and simplify the security posture.
-     *
-     * DENORMALIZATION FOR AUTHORIZATION
-     * Ownership fields (e.g., 'userId') are strictly required on creation and immutable 
-     * on update to ensure that documents cannot be "re-homed" to other users.
      */
 
     // --- Helper Functions ---
 
-    /** Checks if the request is from an authenticated user. */
     function isSignedIn() {
       return request.auth != null;
     }
 
-    /** Checks if the authenticated user's UID matches the provided userId. */
     function isOwner(userId) {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    /** Checks if the user is an owner and the document exists (for update/delete). */
     function isExistingOwner(userId) {
       return isOwner(userId) && resource != null;
     }
 
-    /** Checks if the authenticated user has administrative privileges. */
     function isAdmin() {
       return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
     }
 
     // --- Match Statements ---
 
-    /**
-     * @description Rules for the user's root profile document.
-     * @path /users/{userId}
-     * @allow (get) Authenticated owner gets their profile.
-     * @deny (list) Anonymous user attempts to list all user profiles.
-     * @principle Ownership-based access and self-creation.
-     */
     match /users/{userId} {
       allow get, list: if isOwner(userId);
       allow create: if isOwner(userId) && request.resource.data.id == userId;
       allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
       allow delete: if isExistingOwner(userId);
 
-      /**
-       * @description Physical addresses belonging to a specific user.
-       * @path /users/{userId}/addresses/{addressId}
-       * @allow (create) Owner adds a new shipping address with their userId.
-       * @deny (update) Owner attempts to change the userId field on an existing address.
-       * @principle Path-based ownership and relational immutability.
-       */
       match /addresses/{addressId} {
         allow get, list: if isOwner(userId);
         allow create: if isOwner(userId) && request.resource.data.userId == userId;
@@ -82,26 +39,12 @@ service cloud.firestore {
         allow delete: if isExistingOwner(userId);
       }
 
-      /**
-       * @description User's active shopping cart.
-       * @path /users/{userId}/cart
-       * @allow (get) Owner retrieves their cart status.
-       * @deny (create) User attempts to create a cart for a different UID.
-       * @principle Path-based ownership.
-       */
       match /cart {
         allow get, list: if isOwner(userId);
         allow create: if isOwner(userId) && request.resource.data.userId == userId;
         allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
         allow delete: if isExistingOwner(userId);
 
-        /**
-         * @description Items currently inside a user's cart.
-         * @path /users/{userId}/cart/items/{cartItemId}
-         * @allow (create) Owner adds a product to their own cart.
-         * @deny (get) User attempts to view items in another user's cart.
-         * @principle Path-based ownership for subcollections.
-         */
         match /items/{cartItemId} {
           allow get, list: if isOwner(userId);
           allow create: if isOwner(userId);
@@ -110,40 +53,19 @@ service cloud.firestore {
         }
       }
 
-      /**
-       * @description Purchase orders placed by a user.
-       * @path /users/{userId}/orders/{orderId}
-       * @allow (get) Admin views a customer order for fulfillment.
-       * @deny (delete) Owner attempts to delete a completed order (denied by rule logic).
-       * @principle Ownership-based access with administrative overrides.
-       */
       match /orders/{orderId} {
         allow get, list: if isOwner(userId) || isAdmin();
         allow create: if isOwner(userId) && request.resource.data.userId == userId;
         allow update: if (isExistingOwner(userId) || isAdmin()) && request.resource.data.userId == resource.data.userId;
-        allow delete: if false; // Orders should generally be archived, not deleted.
+        allow delete: if false;
 
-        /**
-         * @description Individual line items for a specific order.
-         * @path /users/{userId}/orders/{orderId}/items/{orderItemId}
-         * @allow (get) Owner views the details of their order.
-         * @deny (write) Any attempt to modify order items after the order is placed.
-         * @principle Read-only historical data for items within orders.
-         */
         match /items/{orderItemId} {
           allow get, list: if isOwner(userId) || isAdmin();
-          allow create: if isOwner(userId); // Only allowed during initial order placement flow.
+          allow create: if isOwner(userId);
           allow update, delete: if false;
         }
       }
 
-      /**
-       * @description User-initiated return requests.
-       * @path /users/{userId}/returnRequests/{returnRequestId}
-       * @allow (update) Admin changes return status from 'Pending' to 'Approved'.
-       * @deny (create) User initiates return with a different userId in the body.
-       * @principle Administrative write access for workflow management.
-       */
       match /returnRequests/{returnRequestId} {
         allow get, list: if isOwner(userId) || isAdmin();
         allow create: if isOwner(userId) && request.resource.data.userId == userId;
@@ -151,13 +73,6 @@ service cloud.firestore {
         allow delete: if isAdmin();
       }
 
-      /**
-       * @description Highly private body measurements for custom tailoring.
-       * @path /users/{userId}/bespokeMeasurements/{measurementId}
-       * @allow (get) Owner retrieves their measurements for a new order.
-       * @deny (get) Another user tries to access these private measurements.
-       * @principle Strict path-based ownership for sensitive PII.
-       */
       match /bespokeMeasurements/{measurementId} {
         allow get, list: if isOwner(userId);
         allow create: if isOwner(userId) && request.resource.data.userId == userId;
@@ -166,41 +81,31 @@ service cloud.firestore {
       }
     }
 
-    /**
-     * @description The public catalog of products and dress samples.
-     * @path /products/{productId}
-     * @allow (list) Any visitor browses the shop catalog.
-     * @deny (create) Authenticated non-admin attempts to add a new product.
-     * @principle Public read access with role-based write restrictions.
-     */
     match /products/{productId} {
       allow get, list: if true;
       allow create, update, delete: if isAdmin();
     }
 
-    /**
-     * @description Promotional discount codes.
-     * @path /discounts/{discountId}
-     * @allow (get) Guest user checks if a discount code is valid at checkout.
-     * @deny (update) Non-admin user tries to modify discount values.
-     * @principle Public read access with role-based write restrictions.
-     */
     match /discounts/{discountId} {
       allow get, list: if true;
       allow create, update, delete: if isAdmin();
     }
 
     /**
-     * @description Metadata collection defining administrative users.
-     * @path /roles_admin/{userId}
-     * @allow (get) Admin checks their own status.
-     * @deny (write) Any client attempts to grant themselves admin rights.
-     * @principle Existence-over-content for global role management.
+     * @description Payment and Studio settings.
+     * @path /settings/{settingId}
+     * @allow (get) Public read for checkout info.
+     * @allow (write) Restricted to Admin users.
      */
+    match /settings/{settingId} {
+      allow get: if true;
+      allow list, create, update, delete: if isAdmin();
+    }
+
     match /roles_admin/{userId} {
       allow get: if isSignedIn();
       allow list: if isAdmin();
-      allow create, update, delete: if false; // Managed via Admin SDK or Firebase Console only.
+      allow create, update, delete: if false;
     }
   }
 }
