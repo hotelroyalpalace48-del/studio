@@ -1,4 +1,4 @@
-import { Smartphone, Clover, QrCode } from 'lucide-react'
+import { Smartphone, Clover, QrCode, Globe } from 'lucide-react'
 import Image from 'next/image'
 import { PlaceHolderImages } from '@/app/lib/placeholder-images'
 
@@ -24,6 +24,16 @@ export function Footer() {
               Exquisite dress patterns and bespoke boutique fashion for the modern woman. 
               Grown from nature, crafted with nazaakat.
             </p>
+            <div className="pt-2">
+              <a 
+                href="https://mograworld.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:opacity-70 transition-opacity"
+              >
+                <Globe className="h-3 w-3" /> Visit mograworld.com
+              </a>
+            </div>
             <div className="space-y-1">
                <p className="text-[10px] font-bold uppercase tracking-widest text-primary">Inquiries</p>
                <p className="text-sm font-medium">9685624004</p>
