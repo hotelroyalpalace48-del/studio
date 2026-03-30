@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ShoppingCart, User, Menu, Search, Ruler } from 'lucide-react'
+import { ShoppingCart, User, Menu, Search, Ruler, Clover } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -52,7 +52,8 @@ export function Navbar() {
     >
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 group">
+            <Clover className="h-7 w-7 text-primary transition-transform group-hover:rotate-12" />
             <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Mogra Design Studio</span>
           </Link>
           <nav className="hidden xl:flex items-center gap-6 text-xs font-medium">
