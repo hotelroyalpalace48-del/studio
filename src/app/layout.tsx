@@ -1,4 +1,3 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
@@ -22,7 +21,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased flex flex-col min-h-screen">
+      <body className="font-body antialiased flex flex-col min-h-screen relative">
+        {/* 3D Background Watermark */}
+        <div className="fixed inset-0 pointer-events-none -z-20 flex items-center justify-center overflow-hidden opacity-[0.04] select-none">
+          <span className="text-[25vw] font-headline font-bold uppercase tracking-tighter text-primary rotate-[-12deg] whitespace-nowrap text-3d-mogra">
+            Mogra
+          </span>
+        </div>
+        
         <Navbar />
         <main className="flex-1">
           {children}
