@@ -2,8 +2,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import Link from 'next/navigation'
-import { ShoppingCart, User, Menu, Search, Ruler, Clover, X } from 'lucide-react'
+import { ShoppingCart, User, Menu, Search, Ruler, Clover, X, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -13,13 +12,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useCart } from '@/hooks/use-cart'
+import { useWishlist } from '@/hooks/use-wishlist'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import LinkNext from 'next/link'
 
 export function Navbar() {
   const { cart } = useCart()
+  const { wishlist } = useWishlist()
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0)
+  const wishlistCount = wishlist.length
   const router = useRouter()
   
   const [isVisible, setIsVisible] = useState(true)
@@ -88,6 +90,17 @@ export function Navbar() {
             )}
           </form>
           
+          <LinkNext href="/wishlist">
+            <Button variant="ghost" size="icon" className="relative hover:bg-primary/5 hover:text-primary transition-colors">
+              <Heart className="h-5 w-5" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-background">
+                  {wishlistCount}
+                </span>
+              )}
+            </Button>
+          </LinkNext>
+
           <LinkNext href="/cart">
             <Button variant="ghost" size="icon" className="relative hover:bg-primary/5 hover:text-primary transition-colors">
               <ShoppingCart className="h-5 w-5" />

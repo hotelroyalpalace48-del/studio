@@ -1,7 +1,7 @@
 
 "use client"
 
-import { use } from 'react'
+import { use, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Heart, ShoppingBag, Truck, RotateCcw, ShieldCheck } from 'lucide-react'
@@ -10,13 +10,16 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { getProductById } from '@/app/lib/products'
 import { useCart } from '@/hooks/use-cart'
+import { useWishlist } from '@/hooks/use-wishlist'
 import { AIStylist } from '@/components/ai-stylist'
 import { useToast } from '@/hooks/use-toast'
+import { cn } from '@/lib/utils'
 
 export default function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const product = getProductById(id)
   const { addToCart } = useCart()
+  const { toggleWishlist, isInWishlist } = useWishlist()
   const { toast } = useToast()
   const router = useRouter()
 
@@ -34,6 +37,14 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
     toast({
       title: "Added to cart",
       description: `${product.name} has been added to your shopping bag.`,
+    })
+  }
+
+  const handleToggleWishlist = () => {
+    const added = toggleWishlist(product)
+    toast({
+      title: added ? "Saved to wishlist" : "Removed from wishlist",
+      description: added ? `${product.name} is now in your favorites.` : `${product.name} has been removed.`,
     })
   }
 
@@ -105,8 +116,16 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
               <Button size="lg" className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-full py-6 uppercase tracking-widest text-xs font-bold" onClick={handleAddToCart}>
                 <ShoppingBag className="mr-2 h-4 w-4" /> Add to Bag
               </Button>
-              <Button size="lg" variant="outline" className="w-16 h-16 rounded-full border-muted text-muted-foreground hover:text-red-500 hover:border-red-500 p-0">
-                <Heart className="h-6 w-6" />
+              <Button 
+                size="lg" 
+                variant="outline" 
+                onClick={handleToggleWishlist}
+                className={cn(
+                  "w-16 h-16 rounded-full border-muted p-0 transition-colors",
+                  isInWishlist(product.id) ? "text-red-500 border-red-200 bg-red-50" : "text-muted-foreground hover:text-red-500 hover:border-red-500"
+                )}
+              >
+                <Heart className={cn("h-6 w-6", isInWishlist(product.id) && "fill-current")} />
               </Button>
             </div>
             
