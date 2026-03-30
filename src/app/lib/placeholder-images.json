@@ -1,4 +1,3 @@
-
 {
   "placeholderImages": [
     {
@@ -6,6 +5,12 @@
       "description": "Ethereal Nazaakat - Jasmine Bloom in Studio",
       "imageUrl": "https://picsum.photos/seed/mogra-nazaakat/1200/800",
       "imageHint": "jasmine flower"
+    },
+    {
+      "id": "studio-soul",
+      "description": "Fashion with Soul - Jasmine in Studio",
+      "imageUrl": "https://picsum.photos/seed/mogra-soul/1000/1250",
+      "imageHint": "jasmine boutique"
     },
     {
       "id": "dress-1",

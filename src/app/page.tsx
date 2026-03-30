@@ -1,4 +1,3 @@
-
 "use client"
 
 import Image from 'next/image'
@@ -13,7 +12,8 @@ import { DailyShayari } from '@/components/daily-shayari'
 
 export default function Home() {
   const firestore = useFirestore()
-  const heroImage = PlaceHolderImages[0];
+  const heroImage = PlaceHolderImages.find(img => img.id === 'hero-1') || PlaceHolderImages[0];
+  const studioSoulImage = PlaceHolderImages.find(img => img.id === 'studio-soul') || PlaceHolderImages[0];
 
   const productsQuery = useMemoFirebase(() => query(
     collection(firestore, 'products'), 
@@ -29,11 +29,11 @@ export default function Home() {
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
         <Image
           src={heroImage.imageUrl}
-          alt="Ethereal Nazaakat Collection"
+          alt={heroImage.description}
           fill
           className="object-cover animate-in fade-in zoom-in-105 duration-[4s] ease-out"
           priority
-          data-ai-hint="jasmine flower"
+          data-ai-hint={heroImage.imageHint}
         />
         {/* Soft atmospheric overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-primary/10 to-background/90" />
@@ -119,11 +119,11 @@ export default function Home() {
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center relative z-10">
           <div className="relative aspect-[4/5] rounded-[4rem] overflow-hidden luxury-shadow group shadow-2xl">
             <Image 
-              src="https://picsum.photos/seed/studio-philosophy/1000/1250" 
-              alt="The Mogra Studio Interior" 
+              src={studioSoulImage.imageUrl} 
+              alt={studioSoulImage.description} 
               fill 
               className="object-cover transition-transform duration-[4s] group-hover:scale-110"
-              data-ai-hint="boutique interior"
+              data-ai-hint={studioSoulImage.imageHint}
             />
             <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[4rem]" />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
