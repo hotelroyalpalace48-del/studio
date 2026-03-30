@@ -2,8 +2,8 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { ShoppingCart, User, Menu, Search, Ruler, Clover } from 'lucide-react'
+import Link from 'next/navigation'
+import { ShoppingCart, User, Menu, Search, Ruler, Clover, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -14,34 +14,40 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useCart } from '@/hooks/use-cart'
 import { cn } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
+import LinkNext from 'next/link'
 
 export function Navbar() {
   const { cart } = useCart()
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0)
+  const router = useRouter()
   
   const [isVisible, setIsVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     const controlNavbar = () => {
       if (typeof window !== 'undefined') {
         const currentScrollY = window.scrollY
-        
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
           setIsVisible(false)
         } else {
           setIsVisible(true)
         }
-        
         setLastScrollY(currentScrollY)
       }
     }
-
     window.addEventListener('scroll', controlNavbar)
-    return () => {
-      window.removeEventListener('scroll', controlNavbar)
-    }
+    return () => window.removeEventListener('scroll', controlNavbar)
   }, [lastScrollY])
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/shop?search=${encodeURIComponent(searchQuery.trim())}`)
+    }
+  }
 
   return (
     <header 
@@ -52,60 +58,67 @@ export function Navbar() {
     >
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center space-x-2 group">
+          <LinkNext href="/" className="flex items-center space-x-2 group">
             <Clover className="h-7 w-7 text-primary transition-transform group-hover:rotate-12" />
             <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Mogra Design Studio</span>
-          </Link>
-          <nav className="hidden xl:flex items-center gap-6 text-xs font-medium">
-            <Link href="/shop" className="hover:text-primary transition-colors uppercase tracking-widest">Shop All</Link>
-            <Link href="/shop?category=Kurtis" className="hover:text-primary transition-colors uppercase tracking-widest">Kurtis</Link>
-            <Link href="/shop?category=Palazzos" className="hover:text-primary transition-colors uppercase tracking-widest">Palazzos</Link>
-            <Link href="/shop?category=Dress Materials" className="hover:text-primary transition-colors uppercase tracking-widest">Materials</Link>
-            <Link href="/shop?category=Ethnic" className="hover:text-primary transition-colors uppercase tracking-widest">Ethnic</Link>
-            <Link href="/shop?category=Formal" className="hover:text-primary transition-colors uppercase tracking-widest">Formal</Link>
+          </LinkNext>
+          <nav className="hidden xl:flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <LinkNext href="/shop" className="hover:text-primary transition-colors">Shop All</LinkNext>
+            <LinkNext href="/shop?category=Kurtis" className="hover:text-primary transition-colors">Kurtis</LinkNext>
+            <LinkNext href="/shop?category=Palazzos" className="hover:text-primary transition-colors">Palazzos</LinkNext>
+            <LinkNext href="/shop?category=Materials" className="hover:text-primary transition-colors">Materials</LinkNext>
+            <LinkNext href="/shop?category=Ethnic" className="hover:text-primary transition-colors">Ethnic</LinkNext>
+            <LinkNext href="/shop?category=Formal" className="hover:text-primary transition-colors">Formal</LinkNext>
           </nav>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="hidden lg:flex items-center bg-muted px-3 py-1.5 rounded-full">
+          <form onSubmit={handleSearch} className="hidden lg:flex items-center bg-muted/50 px-4 py-2 rounded-full border border-transparent focus-within:border-primary/20 transition-all">
             <Search className="h-4 w-4 text-muted-foreground mr-2" />
             <input 
-              placeholder="Search collections..." 
-              className="bg-transparent text-[10px] outline-none w-32 focus:w-48 transition-all"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search patterns..." 
+              className="bg-transparent text-[10px] font-medium outline-none w-32 focus:w-48 transition-all placeholder:text-muted-foreground"
             />
-          </div>
+            {searchQuery && (
+              <button type="button" onClick={() => setSearchQuery('')} className="ml-2 hover:text-primary">
+                <X className="h-3 w-3" />
+              </button>
+            )}
+          </form>
           
-          <Link href="/cart">
-            <Button variant="ghost" size="icon" className="relative">
+          <LinkNext href="/cart">
+            <Button variant="ghost" size="icon" className="relative hover:bg-primary/5 hover:text-primary transition-colors">
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-background">
                   {cartCount}
                 </span>
               )}
             </Button>
-          </Link>
+          </LinkNext>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="hover:bg-primary/5 hover:text-primary transition-colors">
                 <User className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem asChild>
-                <Link href="/orders" className="flex items-center gap-2 cursor-pointer">
-                  My Orders
-                </Link>
+            <DropdownMenuContent align="end" className="w-56 p-2 rounded-xl border-muted/20">
+              <DropdownMenuItem asChild className="rounded-lg">
+                <LinkNext href="/orders" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
+                  Studio History
+                </LinkNext>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/measurements" className="flex items-center gap-2 cursor-pointer">
-                  <Ruler className="h-4 w-4" /> My Measurements
-                </Link>
+              <DropdownMenuItem asChild className="rounded-lg">
+                <LinkNext href="/measurements" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
+                  <Ruler className="h-4 w-4 text-primary" /> Bespoke Profile
+                </LinkNext>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/admin" className="cursor-pointer">Admin Panel</Link>
+              <DropdownMenuSeparator className="my-2" />
+              <DropdownMenuItem asChild className="rounded-lg">
+                <LinkNext href="/admin" className="cursor-pointer font-medium text-xs">Studio Management</LinkNext>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
