@@ -1,4 +1,3 @@
-
 import { Smartphone, Clover } from 'lucide-react'
 
 export function Footer() {

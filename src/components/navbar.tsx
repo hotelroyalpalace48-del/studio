@@ -1,8 +1,7 @@
-
 "use client"
 
 import { useState, useEffect } from 'react'
-import { ShoppingCart, User, Menu, Search, Ruler, Clover, X, Heart } from 'lucide-react'
+import { ShoppingCart, User, Menu, Search, Ruler, Clover, X, Heart, LogIn } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -16,10 +15,13 @@ import { useWishlist } from '@/hooks/use-wishlist'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import LinkNext from 'next/link'
+import { useUser, useAuth, initiateAnonymousSignIn } from '@/firebase'
 
 export function Navbar() {
   const { cart } = useCart()
   const { wishlist } = useWishlist()
+  const { user, isUserLoading } = useUser()
+  const auth = useAuth()
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0)
   const wishlistCount = wishlist.length
   const router = useRouter()
@@ -49,6 +51,10 @@ export function Navbar() {
     if (searchQuery.trim()) {
       router.push(`/shop?search=${encodeURIComponent(searchQuery.trim())}`)
     }
+  }
+
+  const handleSignIn = () => {
+    if (auth) initiateAnonymousSignIn(auth)
   }
 
   return (
@@ -112,29 +118,35 @@ export function Navbar() {
             </Button>
           </LinkNext>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hover:bg-primary/5 hover:text-primary transition-colors">
-                <User className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 p-2 rounded-xl border-muted/20">
-              <DropdownMenuItem asChild className="rounded-lg">
-                <LinkNext href="/orders" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
-                  Studio History
-                </LinkNext>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-lg">
-                <LinkNext href="/measurements" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
-                  <Ruler className="h-4 w-4 text-primary" /> Bespoke Profile
-                </LinkNext>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator className="my-2" />
-              <DropdownMenuItem asChild className="rounded-lg">
-                <LinkNext href="/admin" className="cursor-pointer font-medium text-xs">Studio Management</LinkNext>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {!user && !isUserLoading ? (
+            <Button variant="ghost" size="icon" onClick={handleSignIn} className="hover:bg-primary/5 hover:text-primary transition-colors">
+              <LogIn className="h-5 w-5" />
+            </Button>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="hover:bg-primary/5 hover:text-primary transition-colors">
+                  <User className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 p-2 rounded-xl border-muted/20">
+                <DropdownMenuItem asChild className="rounded-lg">
+                  <LinkNext href="/orders" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
+                    Studio History
+                  </LinkNext>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="rounded-lg">
+                  <LinkNext href="/measurements" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
+                    <Ruler className="h-4 w-4 text-primary" /> Bespoke Profile
+                  </LinkNext>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="my-2" />
+                <DropdownMenuItem asChild className="rounded-lg">
+                  <LinkNext href="/admin" className="cursor-pointer font-medium text-xs">Studio Management</LinkNext>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
 
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-5 w-5" />
