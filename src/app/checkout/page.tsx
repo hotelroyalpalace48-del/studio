@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react'
@@ -14,6 +13,7 @@ import { useUser, useFirestore } from '@/firebase'
 import { collection, doc, serverTimestamp } from 'firebase/firestore'
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates'
 import { useToast } from '@/hooks/use-toast'
+import Link from 'next/link'
 
 export default function CheckoutPage() {
   const { cart, total, clearCart } = useCart()
@@ -238,5 +238,3 @@ function OrderSummary({ cart, total }: { cart: any[], total: number }) {
     </div>
   )
 }
-
-import Link from 'next/link'

@@ -1,4 +1,3 @@
-
 import { Smartphone, Clover, QrCode } from 'lucide-react'
 import Image from 'next/image'
 import { PlaceHolderImages } from '@/app/lib/placeholder-images'
