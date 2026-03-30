@@ -42,6 +42,42 @@
       "description": "Embroidered Festive Wear",
       "imageUrl": "https://picsum.photos/seed/dress6/600/800",
       "imageHint": "festive embroidery"
+    },
+    {
+      "id": "kurti-1",
+      "description": "Lucknowi Chikan Kurti",
+      "imageUrl": "https://picsum.photos/seed/kurti1/600/800",
+      "imageHint": "chikan kurti"
+    },
+    {
+      "id": "material-1",
+      "description": "Kalamkari Dress Material",
+      "imageUrl": "https://picsum.photos/seed/material1/600/800",
+      "imageHint": "indian fabric"
+    },
+    {
+      "id": "palazzo-1",
+      "description": "Banarasi Silk Palazzo",
+      "imageUrl": "https://picsum.photos/seed/palazzo1/600/800",
+      "imageHint": "silk palazzo"
+    },
+    {
+      "id": "palazzo-2",
+      "description": "Chikankari Palazzo",
+      "imageUrl": "https://picsum.photos/seed/palazzo2/600/800",
+      "imageHint": "white palazzo"
+    },
+    {
+      "id": "ethnic-2",
+      "description": "Block Print Suit Set",
+      "imageUrl": "https://picsum.photos/seed/suit1/600/800",
+      "imageHint": "cotton suit"
+    },
+    {
+      "id": "kurti-2",
+      "description": "Georgette Festive Kurti",
+      "imageUrl": "https://picsum.photos/seed/kurti2/600/800",
+      "imageHint": "festive kurti"
     }
   ]
 }

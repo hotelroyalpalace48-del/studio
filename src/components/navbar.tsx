@@ -1,3 +1,4 @@
+
 "use client"
 
 import Link from 'next/link'
@@ -22,11 +23,13 @@ export function Navbar() {
           <Link href="/" className="flex items-center space-x-2">
             <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Mogra Design Studio</span>
           </Link>
-          <nav className="hidden xl:flex items-center gap-6 text-sm font-medium">
-            <Link href="/shop" className="hover:text-primary transition-colors uppercase tracking-widest">Shop</Link>
+          <nav className="hidden xl:flex items-center gap-6 text-xs font-medium">
+            <Link href="/shop" className="hover:text-primary transition-colors uppercase tracking-widest">Shop All</Link>
+            <Link href="/shop?category=Kurtis" className="hover:text-primary transition-colors uppercase tracking-widest">Kurtis</Link>
+            <Link href="/shop?category=Palazzos" className="hover:text-primary transition-colors uppercase tracking-widest">Palazzos</Link>
+            <Link href="/shop?category=Dress Materials" className="hover:text-primary transition-colors uppercase tracking-widest">Materials</Link>
             <Link href="/shop?category=Ethnic" className="hover:text-primary transition-colors uppercase tracking-widest">Ethnic</Link>
             <Link href="/shop?category=Formal" className="hover:text-primary transition-colors uppercase tracking-widest">Formal</Link>
-            <Link href="/shop?category=Casual" className="hover:text-primary transition-colors uppercase tracking-widest">Casual</Link>
           </nav>
         </div>
 
@@ -35,7 +38,7 @@ export function Navbar() {
             <Search className="h-4 w-4 text-muted-foreground mr-2" />
             <input 
               placeholder="Search collections..." 
-              className="bg-transparent text-xs outline-none w-32 focus:w-48 transition-all"
+              className="bg-transparent text-[10px] outline-none w-32 focus:w-48 transition-all"
             />
           </div>
           
