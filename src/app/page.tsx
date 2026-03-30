@@ -1,4 +1,3 @@
-
 "use client"
 
 import Image from 'next/image'
@@ -9,6 +8,7 @@ import { ProductCard } from '@/components/product-card'
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection, query, limit } from 'firebase/firestore'
 import { PlaceHolderImages } from '@/app/lib/placeholder-images'
+import { DailyShayari } from '@/components/daily-shayari'
 
 export default function Home() {
   const firestore = useFirestore()
@@ -18,7 +18,7 @@ export default function Home() {
   const { data: products, isLoading } = useCollection(productsQuery)
 
   return (
-    <div className="flex flex-col gap-20 pb-20">
+    <div className="flex flex-col gap-12 pb-20">
       {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
         <Image
@@ -45,8 +45,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Daily Shayari Section */}
+      <DailyShayari />
+
       {/* Featured Collections */}
-      <section className="container mx-auto px-4">
+      <section className="container mx-auto px-4 pt-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
           <div className="space-y-2">
             <h2 className="font-headline text-4xl font-bold">New arrivals</h2>
