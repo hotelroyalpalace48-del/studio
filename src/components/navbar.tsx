@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { ShoppingCart, User, Menu, Search, Ruler, Clover, X, Heart, LogIn } from 'lucide-react'
+import { ShoppingCart, User, Menu, Search, Ruler, Clover, X, Heart, LogIn, LayoutDashboard } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -69,21 +69,20 @@ export function Navbar() {
         <div className="flex items-center gap-12">
           <LinkNext href="/" className="flex items-center space-x-3 group">
             <div className="p-1.5 rounded-full bg-primary/5 transition-colors group-hover:bg-primary/10">
-              <Clover className="h-6 w-6 text-primary transition-transform duration-700 group-hover:rotate-[360deg]" />
+              <Clover className="h-6 w-6 text-primary transition-transform duration-1000 group-hover:rotate-[360deg]" />
             </div>
-            <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Mogra</span>
+            <div className="flex flex-col">
+              <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase leading-none">Mogra</span>
+              <span className="text-[8px] uppercase tracking-[0.3em] font-bold text-muted-foreground mt-0.5">Design Studio</span>
+            </div>
           </LinkNext>
           <nav className="hidden xl:flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
             <LinkNext href="/shop" className="hover:text-primary transition-colors py-2 relative group">
-              Shop All
+              Collections
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </LinkNext>
             <LinkNext href="/shop?category=Kurtis" className="hover:text-primary transition-colors py-2 relative group">
               Kurtis
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-            </LinkNext>
-            <LinkNext href="/shop?category=Palazzos" className="hover:text-primary transition-colors py-2 relative group">
-              Palazzos
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </LinkNext>
             <LinkNext href="/shop?category=Ethnic" className="hover:text-primary transition-colors py-2 relative group">
@@ -150,7 +149,7 @@ export function Navbar() {
                   </div>
                   <DropdownMenuItem asChild className="rounded-xl focus:bg-primary/5 focus:text-primary py-3 px-4">
                     <LinkNext href="/orders" className="flex items-center gap-3 cursor-pointer font-medium text-xs">
-                      Studio History
+                       Studio History
                     </LinkNext>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="rounded-xl focus:bg-primary/5 focus:text-primary py-3 px-4">
@@ -160,7 +159,9 @@ export function Navbar() {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="my-2 opacity-50" />
                   <DropdownMenuItem asChild className="rounded-xl focus:bg-primary/5 focus:text-primary py-3 px-4">
-                    <LinkNext href="/admin" className="cursor-pointer font-medium text-xs">Studio Management</LinkNext>
+                    <LinkNext href="/admin" className="flex items-center gap-3 cursor-pointer font-medium text-xs">
+                      <LayoutDashboard className="h-4 w-4" /> Studio Management
+                    </LinkNext>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

@@ -9,7 +9,7 @@ import { Clover } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Mogra Design Studio | Exquisite Boutique Fashion',
-  description: 'Mogra Design Studio offers a curated collection of dress patterns, boutique items, and elegant fashion designs.',
+  description: 'Mogra Design Studio offers a curated collection of dress patterns, boutique items, and elegant fashion designs in Bhopal.',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -37,11 +37,11 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen relative overflow-x-hidden">
         <FirebaseClientProvider>
-          {/* Enhanced 3D Background Watermark */}
+          {/* Immersive 3D Background Watermark */}
           <div className="fixed inset-0 pointer-events-none -z-20 flex items-center justify-center overflow-hidden opacity-[0.03] select-none">
             <div className="flex flex-col items-center animate-float">
-              <Clover className="w-[20vw] h-[20vw] text-primary" strokeWidth={1} />
-              <span className="text-[25vw] font-headline font-bold uppercase tracking-tighter text-primary whitespace-nowrap text-3d-mogra -mt-[5vw]">
+              <Clover className="w-[25vw] h-[25vw] text-primary" strokeWidth={0.5} />
+              <span className="text-[28vw] font-headline font-bold uppercase tracking-tighter text-primary whitespace-nowrap text-3d-mogra -mt-[8vw]">
                 Mogra
               </span>
             </div>
