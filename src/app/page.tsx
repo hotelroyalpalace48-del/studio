@@ -1,3 +1,4 @@
+
 "use client"
 
 import Image from 'next/image'
@@ -28,20 +29,21 @@ export default function Home() {
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
         <Image
           src={heroImage.imageUrl}
-          alt="Luxury Dress Collection"
+          alt="Ethereal Nazaakat Collection"
           fill
           className="object-cover animate-in fade-in zoom-in-105 duration-[4s] ease-out"
           priority
-          data-ai-hint="luxury fashion"
+          data-ai-hint="jasmine flower"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-background" />
+        {/* Soft atmospheric overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-primary/10 to-background/90" />
         
         <div className="relative z-10 text-center text-white space-y-12 px-6 max-w-6xl">
           <div className="flex items-center justify-center gap-6 mb-4 animate-in fade-in slide-in-from-bottom-6 duration-1000">
             <span className="h-px w-16 bg-white/20" />
             <div className="flex items-center gap-3">
               <Clover className="h-5 w-5 text-accent animate-pulse" />
-              <p className="text-[11px] uppercase tracking-[0.6em] font-bold text-white/80">Est. Bhopal Studio 2024</p>
+              <p className="text-[11px] uppercase tracking-[0.6em] font-bold text-white/80">The Essence of Mogra</p>
             </div>
             <span className="h-px w-16 bg-white/20" />
           </div>
@@ -51,7 +53,7 @@ export default function Home() {
           </h1>
           
           <p className="text-2xl md:text-4xl max-w-4xl mx-auto font-light tracking-wide opacity-80 leading-snug animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-500">
-            Where every stitch is a tribute to heritage and every silhouette a bloom of grace.
+            Like a jasmine bloom in a quiet morning, our couture whispers the secret of timeless grace.
           </p>
           
           <div className="pt-14 flex flex-col sm:flex-row items-center justify-center gap-10 animate-in fade-in slide-in-from-bottom-20 duration-1000 delay-700">
