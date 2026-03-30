@@ -8,13 +8,38 @@ import { PWAInstall } from '@/components/pwa-install';
 import { Clover } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Mogra Design Studio | Exquisite Boutique Fashion',
-  description: 'Mogra Design Studio offers a curated collection of dress patterns, boutique items, and elegant fashion designs in Bhopal.',
+  title: 'Mogra Design Studio | Exquisite Boutique Fashion & Bespoke Tailoring',
+  description: 'Mogra Design Studio in Bhopal offers a curated collection of dress patterns, boutique items, and elegant fashion designs. Discover the essence of Nazaakat with our bespoke tailoring and ethnic wear.',
+  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal'],
+  authors: [{ name: 'Mogra Design Studio' }],
+  openGraph: {
+    title: 'Mogra Design Studio | Exquisite Boutique Fashion',
+    description: 'Handcrafted silhouettes and bespoke tailoring from the heart of Bhopal. Explore our curated collections.',
+    url: 'https://mograworld.com',
+    siteName: 'Mogra Design Studio',
+    images: [
+      {
+        url: 'https://picsum.photos/seed/mogra-og/1200/630',
+        width: 1200,
+        height: 630,
+        alt: 'Mogra Design Studio Collection',
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mogra Design Studio | Boutique Fashion',
+    description: 'Ethereal Nazaakat in every stitch. Discover our latest collections in Bhopal.',
+    images: ['https://picsum.photos/seed/mogra-twitter/1200/630'],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
     title: 'Mogra Studio',
   },
+  metadataBase: new URL('https://mograworld.com'),
 };
 
 export const viewport: Viewport = {
