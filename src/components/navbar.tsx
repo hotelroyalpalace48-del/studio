@@ -60,97 +60,116 @@ export function Navbar() {
   return (
     <header 
       className={cn(
-        "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-transform duration-300 ease-in-out",
-        !isVisible ? "-translate-y-full" : "translate-y-0"
+        "sticky top-0 z-50 w-full transition-all duration-500 ease-in-out",
+        !isVisible ? "-translate-y-full" : "translate-y-0",
+        lastScrollY > 20 ? "h-16 glass-panel" : "h-24 bg-transparent border-transparent"
       )}
     >
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <LinkNext href="/" className="flex items-center space-x-2 group">
-            <Clover className="h-7 w-7 text-primary transition-transform group-hover:rotate-12" />
-            <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Mogra Design Studio</span>
+      <div className="container mx-auto px-6 h-full flex items-center justify-between">
+        <div className="flex items-center gap-12">
+          <LinkNext href="/" className="flex items-center space-x-3 group">
+            <div className="p-1.5 rounded-full bg-primary/5 transition-colors group-hover:bg-primary/10">
+              <Clover className="h-6 w-6 text-primary transition-transform duration-700 group-hover:rotate-[360deg]" />
+            </div>
+            <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Mogra</span>
           </LinkNext>
-          <nav className="hidden xl:flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em]">
-            <LinkNext href="/shop" className="hover:text-primary transition-colors">Shop All</LinkNext>
-            <LinkNext href="/shop?category=Kurtis" className="hover:text-primary transition-colors">Kurtis</LinkNext>
-            <LinkNext href="/shop?category=Palazzos" className="hover:text-primary transition-colors">Palazzos</LinkNext>
-            <LinkNext href="/shop?category=Materials" className="hover:text-primary transition-colors">Materials</LinkNext>
-            <LinkNext href="/shop?category=Ethnic" className="hover:text-primary transition-colors">Ethnic</LinkNext>
-            <LinkNext href="/shop?category=Formal" className="hover:text-primary transition-colors">Formal</LinkNext>
+          <nav className="hidden xl:flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
+            <LinkNext href="/shop" className="hover:text-primary transition-colors py-2 relative group">
+              Shop All
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </LinkNext>
+            <LinkNext href="/shop?category=Kurtis" className="hover:text-primary transition-colors py-2 relative group">
+              Kurtis
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </LinkNext>
+            <LinkNext href="/shop?category=Palazzos" className="hover:text-primary transition-colors py-2 relative group">
+              Palazzos
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </LinkNext>
+            <LinkNext href="/shop?category=Ethnic" className="hover:text-primary transition-colors py-2 relative group">
+              Ethnic
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </LinkNext>
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">
-          <form onSubmit={handleSearch} className="hidden lg:flex items-center bg-muted/50 px-4 py-2 rounded-full border border-transparent focus-within:border-primary/20 transition-all">
-            <Search className="h-4 w-4 text-muted-foreground mr-2" />
+        <div className="flex items-center gap-5">
+          <form onSubmit={handleSearch} className="hidden lg:flex items-center bg-primary/5 px-5 py-2.5 rounded-full border border-transparent focus-within:border-primary/10 focus-within:bg-white transition-all duration-300">
+            <Search className="h-4 w-4 text-primary/40 mr-2.5" />
             <input 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search patterns..." 
-              className="bg-transparent text-[10px] font-medium outline-none w-32 focus:w-48 transition-all placeholder:text-muted-foreground"
+              placeholder="Discover elegance..." 
+              className="bg-transparent text-[11px] font-medium outline-none w-36 focus:w-56 transition-all placeholder:text-muted-foreground/50"
             />
             {searchQuery && (
-              <button type="button" onClick={() => setSearchQuery('')} className="ml-2 hover:text-primary">
-                <X className="h-3 w-3" />
+              <button type="button" onClick={() => setSearchQuery('')} className="ml-2.5 hover:text-primary">
+                <X className="h-3.5 w-3.5" />
               </button>
             )}
           </form>
           
-          <LinkNext href="/wishlist">
-            <Button variant="ghost" size="icon" className="relative hover:bg-primary/5 hover:text-primary transition-colors">
-              <Heart className="h-5 w-5" />
-              {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-background">
-                  {wishlistCount}
-                </span>
-              )}
-            </Button>
-          </LinkNext>
+          <div className="flex items-center gap-2">
+            <LinkNext href="/wishlist">
+              <Button variant="ghost" size="icon" className="relative hover:bg-primary/5 hover:text-primary transition-all duration-300 rounded-full">
+                <Heart className="h-5 w-5" />
+                {wishlistCount > 0 && (
+                  <span className="absolute top-1 right-1 bg-accent text-accent-foreground text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Button>
+            </LinkNext>
 
-          <LinkNext href="/cart">
-            <Button variant="ghost" size="icon" className="relative hover:bg-primary/5 hover:text-primary transition-colors">
-              <ShoppingCart className="h-5 w-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-background">
-                  {cartCount}
-                </span>
-              )}
-            </Button>
-          </LinkNext>
+            <LinkNext href="/cart">
+              <Button variant="ghost" size="icon" className="relative hover:bg-primary/5 hover:text-primary transition-all duration-300 rounded-full">
+                <ShoppingCart className="h-5 w-5" />
+                {cartCount > 0 && (
+                  <span className="absolute top-1 right-1 bg-primary text-primary-foreground text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+                    {cartCount}
+                  </span>
+                )}
+              </Button>
+            </LinkNext>
 
-          {!user && !isUserLoading ? (
-            <Button variant="ghost" size="icon" onClick={handleSignIn} className="hover:bg-primary/5 hover:text-primary transition-colors">
-              <LogIn className="h-5 w-5" />
-            </Button>
-          ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-primary/5 hover:text-primary transition-colors">
-                  <User className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 p-2 rounded-xl border-muted/20">
-                <DropdownMenuItem asChild className="rounded-lg">
-                  <LinkNext href="/orders" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
-                    Studio History
-                  </LinkNext>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="rounded-lg">
-                  <LinkNext href="/measurements" className="flex items-center gap-2 cursor-pointer font-medium text-xs">
-                    <Ruler className="h-4 w-4 text-primary" /> Bespoke Profile
-                  </LinkNext>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="my-2" />
-                <DropdownMenuItem asChild className="rounded-lg">
-                  <LinkNext href="/admin" className="cursor-pointer font-medium text-xs">Studio Management</LinkNext>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+            {!user && !isUserLoading ? (
+              <Button variant="ghost" size="icon" onClick={handleSignIn} className="hover:bg-primary/5 hover:text-primary transition-all duration-300 rounded-full">
+                <LogIn className="h-5 w-5" />
+              </Button>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="hover:bg-primary/5 hover:text-primary transition-all duration-300 rounded-full">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64 p-3 rounded-2xl glass-panel animate-in fade-in zoom-in-95 duration-200">
+                  <div className="px-3 py-4 border-b border-primary/5 mb-2">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Authenticated</p>
+                    <p className="text-sm font-medium truncate">{user?.email || 'Valued Client'}</p>
+                  </div>
+                  <DropdownMenuItem asChild className="rounded-xl focus:bg-primary/5 focus:text-primary py-3 px-4">
+                    <LinkNext href="/orders" className="flex items-center gap-3 cursor-pointer font-medium text-xs">
+                      Studio History
+                    </LinkNext>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="rounded-xl focus:bg-primary/5 focus:text-primary py-3 px-4">
+                    <LinkNext href="/measurements" className="flex items-center gap-3 cursor-pointer font-medium text-xs">
+                      <Ruler className="h-4 w-4" /> Bespoke Profile
+                    </LinkNext>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="my-2 opacity-50" />
+                  <DropdownMenuItem asChild className="rounded-xl focus:bg-primary/5 focus:text-primary py-3 px-4">
+                    <LinkNext href="/admin" className="cursor-pointer font-medium text-xs">Studio Management</LinkNext>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
 
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu className="h-5 w-5" />
-          </Button>
+            <Button variant="ghost" size="icon" className="md:hidden rounded-full">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </div>
     </header>
