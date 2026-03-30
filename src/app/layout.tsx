@@ -1,13 +1,25 @@
-import type {Metadata} from 'next';
+import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
+import { PWAInstall } from '@/components/pwa-install';
 
 export const metadata: Metadata = {
   title: 'Mogra Design Studio | Exquisite Boutique Fashion',
   description: 'Mogra Design Studio offers a curated collection of dress patterns, boutique items, and elegant fashion designs.',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Mogra Studio',
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#218a21',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -37,6 +49,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <Toaster />
+          <PWAInstall />
         </FirebaseClientProvider>
       </body>
     </html>

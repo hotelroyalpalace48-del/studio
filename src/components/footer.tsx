@@ -1,3 +1,5 @@
+import { Smartphone } from 'lucide-react'
+
 export function Footer() {
   return (
     <footer className="border-t bg-muted/30">
@@ -30,10 +32,19 @@ export function Footer() {
               New Minal Residency, Minal Residency,<br />
               Bhopal, Madhya Pradesh 462023
             </address>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Sustainability</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Our Process</a></li>
-            </ul>
+            <div className="mt-6 pt-4 border-t border-muted-foreground/10">
+              <h4 className="font-bold mb-3 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                <Smartphone className="h-3 w-3" /> Get the App
+              </h4>
+              <div className="flex flex-col gap-2">
+                <div className="h-8 w-24 bg-black rounded flex items-center justify-center text-[8px] text-white font-bold cursor-pointer hover:opacity-80 transition-opacity">
+                  App Store
+                </div>
+                <div className="h-8 w-24 bg-black rounded flex items-center justify-center text-[8px] text-white font-bold cursor-pointer hover:opacity-80 transition-opacity">
+                  Google Play
+                </div>
+              </div>
+            </div>
           </div>
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-widest text-xs">Stay Connected</h4>
