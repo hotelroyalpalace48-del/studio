@@ -1,6 +1,6 @@
 # Mogra Design Studio - mogradesignstudio.com
 
-Official digital platform for Mogra Design Studio, Bhopal. 
+**LIVE NOW - Official Digital Platform for Mogra Design Studio, Bhopal.**
 
 Exquisite boutique fashion, handcrafted dress patterns, and bespoke tailoring.
 
@@ -13,3 +13,7 @@ The studio is configured for deployment at: https://mogradesignstudio.com
 - **Studio History**: Track your handcrafted orders and delivery status.
 - **Admin Control**: Manage payment settings (UPI/Bank) and catalog via the Studio Management dashboard.
 - **AI Stylist**: Personalized styling recommendations for every silhouette.
+- **Now Live**: Fully optimized for Google Search and mobile discovery.
+
+## Local Presence
+Located at Gate No. 3, A-17, New Minal Residency, Bhopal, MP.

@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Mogra Design Studio',
     short_name: 'Mogra Studio',
-    description: 'Exquisite Boutique Fashion and Bespoke Dress Patterns from Bhopal.',
+    description: 'Exquisite Boutique Fashion and Bespoke Dress Patterns from Bhopal. Now Live.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
