@@ -1,14 +1,21 @@
+
+"use client"
+
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ProductCard } from '@/components/product-card'
-import { getProducts } from '@/app/lib/products'
+import { useFirestore, useCollection, useMemoFirebase } from '@/firebase'
+import { collection, query, limit } from 'firebase/firestore'
 import { PlaceHolderImages } from '@/app/lib/placeholder-images'
 
 export default function Home() {
-  const products = getProducts().slice(0, 4);
+  const firestore = useFirestore()
   const heroImage = PlaceHolderImages[0];
+
+  const productsQuery = useMemoFirebase(() => query(collection(firestore, 'products'), limit(4)), [firestore])
+  const { data: products, isLoading } = useCollection(productsQuery)
 
   return (
     <div className="flex flex-col gap-20 pb-20">
@@ -50,11 +57,20 @@ export default function Home() {
           </Link>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {products?.map(product => (
+              <ProductCard key={product.id} product={{
+                ...product,
+                images: product.imageUrls || []
+              }} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Philosophy Section */}
@@ -79,8 +95,8 @@ export default function Home() {
                 Located in the heart of Bhopal at Minal Residency, our boutique approach ensures that every client receives a piece that is as unique as they are, balancing classic ethnic motifs with contemporary silhouettes.
               </p>
             </div>
-            <Button variant="outline" size="lg" className="rounded-full px-8 border-primary text-primary hover:bg-primary hover:text-white transition-all uppercase tracking-widest text-xs">
-              Our Story
+            <Button variant="outline" size="lg" className="rounded-full px-8 border-primary text-primary hover:bg-primary hover:text-white transition-all uppercase tracking-widest text-xs" asChild>
+              <Link href="/shop">Our Story</Link>
             </Button>
           </div>
         </div>
@@ -91,8 +107,8 @@ export default function Home() {
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="font-headline text-4xl font-bold">Tailored to perfection</h2>
           <p className="text-muted-foreground">Looking for a specific pattern or a custom fit? Our master designers at Mogra Design Studio are here to help you create your dream outfit.</p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-12 uppercase tracking-widest text-xs">
-            Consult a Designer
+          <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-12 uppercase tracking-widest text-xs" asChild>
+            <Link href="/measurements">Enter Measurements</Link>
           </Button>
         </div>
       </section>

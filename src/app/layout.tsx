@@ -3,6 +3,7 @@ import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
+import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
   title: 'Mogra Design Studio | Exquisite Boutique Fashion',
@@ -22,19 +23,21 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen relative">
-        {/* 3D Background Watermark */}
-        <div className="fixed inset-0 pointer-events-none -z-20 flex items-center justify-center overflow-hidden opacity-[0.04] select-none">
-          <span className="text-[25vw] font-headline font-bold uppercase tracking-tighter text-primary rotate-[-12deg] whitespace-nowrap text-3d-mogra">
-            Mogra
-          </span>
-        </div>
-        
-        <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <Toaster />
+        <FirebaseClientProvider>
+          {/* 3D Background Watermark */}
+          <div className="fixed inset-0 pointer-events-none -z-20 flex items-center justify-center overflow-hidden opacity-[0.04] select-none">
+            <span className="text-[25vw] font-headline font-bold uppercase tracking-tighter text-primary rotate-[-12deg] whitespace-nowrap text-3d-mogra">
+              Mogra
+            </span>
+          </div>
+          
+          <Navbar />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <Toaster />
+        </FirebaseClientProvider>
       </body>
     </html>
   );

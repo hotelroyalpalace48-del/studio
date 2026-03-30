@@ -3,12 +3,13 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ShoppingCart, User, Menu, Search } from 'lucide-react'
+import { ShoppingCart, User, Menu, Search, Ruler } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useCart } from '@/hooks/use-cart'
@@ -26,7 +27,6 @@ export function Navbar() {
       if (typeof window !== 'undefined') {
         const currentScrollY = window.scrollY
         
-        // Only hide after scrolling down a bit (threshold of 100px)
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
           setIsVisible(false)
         } else {
@@ -91,12 +91,20 @@ export function Navbar() {
                 <User className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem asChild>
-                <Link href="/orders">My Orders</Link>
+                <Link href="/orders" className="flex items-center gap-2 cursor-pointer">
+                  My Orders
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/admin">Admin Panel</Link>
+                <Link href="/measurements" className="flex items-center gap-2 cursor-pointer">
+                  <Ruler className="h-4 w-4" /> My Measurements
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/admin" className="cursor-pointer">Admin Panel</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

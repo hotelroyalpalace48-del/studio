@@ -11,12 +11,24 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { adminProductDescriptionGenerator } from '@/ai/flows/admin-product-description-generator'
 import { useToast } from '@/hooks/use-toast'
+import { useFirestore, useCollection, useMemoFirebase } from '@/firebase'
+import { collection, doc, serverTimestamp, deleteDoc } from 'firebase/firestore'
+import { setDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase/non-blocking-updates'
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(false)
+  const [publishing, setPublishing] = useState(false)
   const [keywords, setKeywords] = useState('')
   const [description, setDescription] = useState('')
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [category, setCategory] = useState('')
+  
   const { toast } = useToast()
+  const firestore = useFirestore()
+
+  const productsQuery = useMemoFirebase(() => collection(firestore, 'products'), [firestore])
+  const { data: products, isLoading: isProductsLoading } = useCollection(productsQuery)
 
   const handleGenerateDescription = async () => {
     if (!keywords) {
@@ -33,7 +45,7 @@ export default function AdminPage() {
       const keywordList = keywords.split(',').map(k => k.trim())
       const result = await adminProductDescriptionGenerator({
         keywords: keywordList,
-        productImages: [] // In a real app, you'd pass base64 image data
+        productImages: [] 
       })
       setDescription(result.description)
       toast({
@@ -49,6 +61,58 @@ export default function AdminPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handlePublish = async () => {
+    if (!name || !price || !category) {
+      toast({
+        variant: "destructive",
+        title: "Missing Information",
+        description: "Please fill in all required fields."
+      })
+      return
+    }
+
+    setPublishing(true)
+    const productId = doc(collection(firestore, 'placeholder')).id
+    const productRef = doc(firestore, 'products', productId)
+    
+    const newProduct = {
+      id: productId,
+      name,
+      description,
+      price: Number(price),
+      category,
+      sku: `MOG-${Math.floor(Math.random() * 9000) + 1000}`,
+      imageUrls: ["https://picsum.photos/seed/" + productId + "/600/800"],
+      stockQuantity: 10,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+
+    setDocumentNonBlocking(productRef, newProduct, { merge: true })
+
+    setTimeout(() => {
+      setPublishing(false)
+      toast({
+        title: "Published!",
+        description: "Pattern has been added to the studio catalog."
+      })
+      setName('')
+      setPrice('')
+      setCategory('')
+      setDescription('')
+      setKeywords('')
+    }, 500)
+  }
+
+  const handleDelete = (id: string) => {
+    const productRef = doc(firestore, 'products', id)
+    deleteDocumentNonBlocking(productRef)
+    toast({
+      title: "Deleted",
+      description: "Product removed from catalog."
+    })
   }
 
   return (
@@ -77,16 +141,32 @@ export default function AdminPage() {
               <CardContent className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="name">Design Name</Label>
-                  <Input id="name" placeholder="e.g. Sapphire Velvet Gown" />
+                  <Input 
+                    id="name" 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)} 
+                    placeholder="e.g. Sapphire Velvet Gown" 
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="price">Price ($)</Label>
-                    <Input id="price" type="number" placeholder="299" />
+                    <Input 
+                      id="price" 
+                      type="number" 
+                      value={price} 
+                      onChange={(e) => setPrice(e.target.value)} 
+                      placeholder="299" 
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="category">Category</Label>
-                    <Input id="category" placeholder="Ethnic, Formal, etc." />
+                    <Input 
+                      id="category" 
+                      value={category} 
+                      onChange={(e) => setCategory(e.target.value)} 
+                      placeholder="Kurtis, Ethnic, Formal, etc." 
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -107,7 +187,6 @@ export default function AdminPage() {
                       Generate
                     </Button>
                   </div>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Separate keywords with commas</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="description">Product Description</Label>
@@ -143,8 +222,13 @@ export default function AdminPage() {
               </Card>
 
               <div className="flex gap-4">
-                <Button className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-full py-6 uppercase tracking-widest text-xs font-bold">
-                  <Save className="mr-2 h-4 w-4" /> Publish to Catalog
+                <Button 
+                  onClick={handlePublish}
+                  disabled={publishing}
+                  className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-full py-6 uppercase tracking-widest text-xs font-bold"
+                >
+                  {publishing ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="mr-2 h-4 w-4" />}
+                  Publish to Catalog
                 </Button>
                 <Button variant="outline" className="flex-1 rounded-full py-6 uppercase tracking-widest text-xs font-bold border-muted">
                   Save Draft
@@ -168,14 +252,16 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <tr key={i} className="hover:bg-muted/10 transition-colors">
-                        <td className="px-6 py-4 font-bold">Emerald Gown {i}</td>
-                        <td className="px-6 py-4">$450</td>
+                    {isProductsLoading ? (
+                      <tr><td colSpan={4} className="text-center py-12"><Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" /></td></tr>
+                    ) : products?.map((p) => (
+                      <tr key={p.id} className="hover:bg-muted/10 transition-colors">
+                        <td className="px-6 py-4 font-bold">{p.name}</td>
+                        <td className="px-6 py-4">${p.price}</td>
                         <td className="px-6 py-4"><span className="text-green-600 font-bold">• Active</span></td>
                         <td className="px-6 py-4 text-right space-x-2">
                           <Button size="icon" variant="ghost"><Edit className="h-4 w-4" /></Button>
-                          <Button size="icon" variant="ghost" className="text-red-500"><Trash2 className="h-4 w-4" /></Button>
+                          <Button size="icon" variant="ghost" onClick={() => handleDelete(p.id)} className="text-red-500"><Trash2 className="h-4 w-4" /></Button>
                         </td>
                       </tr>
                     ))}
