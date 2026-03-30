@@ -1,4 +1,3 @@
-
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
@@ -77,7 +76,7 @@ export default function Home() {
                 At Mogra Design Studio, we believe that fashion is a form of poetry. Each stitch tells a story of heritage, and every fabric choice reflects our commitment to natural beauty and sustainability.
               </p>
               <p>
-                Our boutique approach ensures that every client receives a piece that is as unique as they are, balancing classic ethnic motifs with contemporary silhouettes.
+                Located in the heart of Bhopal at Minal Residency, our boutique approach ensures that every client receives a piece that is as unique as they are, balancing classic ethnic motifs with contemporary silhouettes.
               </p>
             </div>
             <Button variant="outline" size="lg" className="rounded-full px-8 border-primary text-primary hover:bg-primary hover:text-white transition-all uppercase tracking-widest text-xs">
@@ -91,7 +90,7 @@ export default function Home() {
       <section className="container mx-auto px-4 text-center py-10">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="font-headline text-4xl font-bold">Tailored to perfection</h2>
-          <p className="text-muted-foreground">Looking for a specific pattern or a custom fit? Our master designers are here to help you create your dream outfit.</p>
+          <p className="text-muted-foreground">Looking for a specific pattern or a custom fit? Our master designers at Mogra Design Studio are here to help you create your dream outfit.</p>
           <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-12 uppercase tracking-widest text-xs">
             Consult a Designer
           </Button>

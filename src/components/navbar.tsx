@@ -1,8 +1,7 @@
-
 "use client"
 
 import Link from 'next/link'
-import { ShoppingCart, User, Menu, Search, Package } from 'lucide-react'
+import { ShoppingCart, User, Menu, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -21,9 +20,9 @@ export function Navbar() {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="font-headline text-3xl font-bold text-primary tracking-tighter">MOGRA</span>
+            <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Mogra Design Studio</span>
           </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <nav className="hidden xl:flex items-center gap-6 text-sm font-medium">
             <Link href="/shop" className="hover:text-primary transition-colors uppercase tracking-widest">Shop</Link>
             <Link href="/shop?category=Ethnic" className="hover:text-primary transition-colors uppercase tracking-widest">Ethnic</Link>
             <Link href="/shop?category=Formal" className="hover:text-primary transition-colors uppercase tracking-widest">Formal</Link>
@@ -32,7 +31,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center bg-muted px-3 py-1.5 rounded-full">
+          <div className="hidden lg:flex items-center bg-muted px-3 py-1.5 rounded-full">
             <Search className="h-4 w-4 text-muted-foreground mr-2" />
             <input 
               placeholder="Search collections..." 
