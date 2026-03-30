@@ -1,4 +1,3 @@
-
 import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
@@ -19,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Mogra Design Studio | Exquisite Boutique Fashion',
     description: 'Handcrafted silhouettes and bespoke tailoring from the heart of Bhopal. Explore our curated collections.',
-    url: 'https://mograworld.com',
+    url: 'https://mogradesignstudio.com',
     siteName: 'Mogra Design Studio',
     images: [
       {
@@ -43,7 +42,7 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: 'Mogra Studio',
   },
-  metadataBase: new URL('https://mograworld.com'),
+  metadataBase: new URL('https://mogradesignstudio.com'),
 };
 
 export const viewport: Viewport = {

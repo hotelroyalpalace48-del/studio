@@ -26,12 +26,12 @@ export function Footer() {
             </p>
             <div className="pt-2">
               <a 
-                href="https://mograworld.com/" 
+                href="https://mogradesignstudio.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:opacity-70 transition-opacity"
               >
-                <Globe className="h-3 w-3" /> Visit mograworld.com
+                <Globe className="h-3 w-3" /> Visit mogradesignstudio.com
               </a>
             </div>
             <div className="space-y-1">

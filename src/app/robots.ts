@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://mograworld.com/sitemap.xml',
+    sitemap: 'https://mogradesignstudio.com/sitemap.xml',
   }
 }

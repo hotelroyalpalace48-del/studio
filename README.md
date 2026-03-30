@@ -1,11 +1,11 @@
-# Mogra Design Studio - mograworld.com
+# Mogra Design Studio - mogradesignstudio.com
 
 Official digital platform for Mogra Design Studio, Bhopal. 
 
 Exquisite boutique fashion, handcrafted dress patterns, and bespoke tailoring.
 
 ## Domain
-The studio is configured for deployment at: https://mograworld.com
+The studio is configured for deployment at: https://mogradesignstudio.com
 
 ## Features
 - **Curated Collections**: Browse silhouettes designed in the heart of Bhopal.
