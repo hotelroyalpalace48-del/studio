@@ -24,83 +24,83 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-32 pb-40">
-      {/* Hero Section */}
-      <section className="relative h-[98vh] flex items-center justify-center overflow-hidden">
+      {/* Immersive Hero Section */}
+      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
         <Image
           src={heroImage.imageUrl}
           alt="Luxury Dress Collection"
           fill
-          className="object-cover animate-in fade-in zoom-in-105 duration-[3s] ease-out"
+          className="object-cover animate-in fade-in zoom-in-105 duration-[4s] ease-out"
           priority
-          data-ai-hint="luxury dress"
+          data-ai-hint="luxury fashion"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-background" />
         
-        <div className="relative z-10 text-center text-white space-y-10 px-6 max-w-5xl">
-          <div className="flex items-center justify-center gap-4 mb-2 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <span className="h-px w-12 bg-white/30" />
-            <div className="flex items-center gap-2">
-              <Clover className="h-4 w-4 text-accent" />
-              <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-white/90">Est. Bhopal 2024</p>
+        <div className="relative z-10 text-center text-white space-y-12 px-6 max-w-6xl">
+          <div className="flex items-center justify-center gap-6 mb-4 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+            <span className="h-px w-16 bg-white/20" />
+            <div className="flex items-center gap-3">
+              <Clover className="h-5 w-5 text-accent animate-pulse" />
+              <p className="text-[11px] uppercase tracking-[0.6em] font-bold text-white/80">Est. Bhopal Studio 2024</p>
             </div>
-            <span className="h-px w-12 bg-white/30" />
+            <span className="h-px w-16 bg-white/20" />
           </div>
           
-          <h1 className="font-headline text-7xl md:text-9xl font-bold tracking-tighter leading-none animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-            Timeless <br /> <span className="italic font-normal text-white/90">Nazaakat.</span>
+          <h1 className="font-headline text-8xl md:text-[11rem] font-bold tracking-tighter leading-[0.85] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+            Ethereal <br /> <span className="italic font-normal text-white/85">Nazaakat.</span>
           </h1>
           
-          <p className="text-xl md:text-3xl max-w-3xl mx-auto font-light tracking-wide opacity-90 leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-400">
-            Handcrafted luxury patterns and bespoke couture, where every stitch is a verse of Indian heritage.
+          <p className="text-2xl md:text-4xl max-w-4xl mx-auto font-light tracking-wide opacity-80 leading-snug animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-500">
+            Where every stitch is a tribute to heritage and every silhouette a bloom of grace.
           </p>
           
-          <div className="pt-10 flex flex-col sm:flex-row items-center justify-center gap-8 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-500">
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full px-16 py-8 uppercase tracking-[0.3em] text-[10px] font-bold shadow-2xl" asChild>
-              <Link href="/shop">The Collections <ArrowRight className="ml-2 h-4 w-4" /></Link>
+          <div className="pt-14 flex flex-col sm:flex-row items-center justify-center gap-10 animate-in fade-in slide-in-from-bottom-20 duration-1000 delay-700">
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full px-20 py-10 uppercase tracking-[0.4em] text-[11px] font-bold luxury-shadow h-auto" asChild>
+              <Link href="/shop">View Collections <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
-            <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 rounded-full px-16 py-8 uppercase tracking-[0.3em] text-[10px] font-bold border border-white/20 backdrop-blur-sm" asChild>
+            <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 rounded-full px-20 py-10 uppercase tracking-[0.4em] text-[11px] font-bold border border-white/20 backdrop-blur-md h-auto" asChild>
               <Link href="/measurements">Bespoke Fitting</Link>
             </Button>
           </div>
         </div>
         
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
-           <div className="w-px h-24 bg-gradient-to-b from-white to-transparent" />
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
+           <div className="w-px h-32 bg-gradient-to-b from-white to-transparent" />
         </div>
       </section>
 
-      {/* Daily Shayari Section */}
-      <section className="container mx-auto px-6 py-16 bg-primary/5 rounded-[4rem] relative overflow-hidden group">
-        <div className="absolute -top-32 -right-32 w-80 h-80 bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-accent/10 rounded-full blur-[120px]" />
+      {/* Daily Shayari - Cultural Heart */}
+      <section className="container mx-auto px-6 py-24 bg-primary/[0.02] rounded-[5rem] relative overflow-hidden group border border-primary/5">
+        <div className="absolute -top-48 -right-48 w-96 h-96 bg-primary/[0.03] rounded-full blur-[150px]" />
+        <div className="absolute -bottom-48 -left-48 w-96 h-96 bg-accent/[0.05] rounded-full blur-[150px]" />
         <DailyShayari />
       </section>
 
-      {/* Featured Collections */}
+      {/* Featured Silhouettes */}
       <section className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-10">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 text-primary font-bold">
-              <Sparkles className="h-5 w-5 text-accent" />
-              <p className="text-[11px] uppercase tracking-[0.4em]">Bhopal Studio curation</p>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-28 gap-12">
+          <div className="space-y-8 stagger-1 animate-in fade-in slide-in-from-left-8 duration-1000">
+            <div className="flex items-center gap-4 text-primary font-bold">
+              <Sparkles className="h-6 w-6 text-accent" />
+              <p className="text-[12px] uppercase tracking-[0.5em]">The Bhopal Curation</p>
             </div>
-            <h2 className="font-headline text-6xl md:text-7xl font-bold italic">Latest Silhouettes</h2>
-            <p className="text-muted-foreground tracking-wide max-w-lg text-lg">Our newest additions, meticulously designed for modern elegance while honoring timeless tradition.</p>
+            <h2 className="font-headline text-7xl md:text-8xl font-bold leading-none">New <br /><span className="italic font-normal">Silhouettes</span></h2>
+            <p className="text-muted-foreground tracking-wide max-w-xl text-xl font-light">Meticulously handcrafted patterns designed for the modern woman who honors timeless tradition.</p>
           </div>
-          <Link href="/shop" className="text-[11px] font-bold border-b-2 border-primary pb-3 flex items-center gap-3 group tracking-[0.3em] uppercase">
-            Full Studio Lookbook <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-3" />
+          <Link href="/shop" className="text-[12px] font-bold border-b border-primary/30 pb-4 flex items-center gap-4 group tracking-[0.4em] uppercase hover:border-primary transition-all">
+            The Studio Lookbook <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-4" />
           </Link>
         </div>
         
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-32 gap-6">
-            <Loader2 className="h-12 w-12 animate-spin text-primary/30" />
-            <p className="text-[11px] uppercase tracking-[0.4em] font-bold text-muted-foreground/40">Curation in progress...</p>
+          <div className="flex flex-col items-center justify-center py-48 gap-8">
+            <Loader2 className="h-14 w-14 animate-spin text-primary/20" />
+            <p className="text-[12px] uppercase tracking-[0.5em] font-bold text-muted-foreground/30 animate-pulse">Curating your selection...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-24">
             {products?.map((product, idx) => (
-              <div key={product.id} className={`animate-in fade-in slide-in-from-bottom-8 duration-1000 stagger-${(idx % 3) + 1}`}>
+              <div key={product.id} className={`animate-in fade-in slide-in-from-bottom-12 duration-1000 stagger-${(idx % 4) + 1}`}>
                 <ProductCard product={{
                   ...product,
                   images: product.imageUrls || []
@@ -111,42 +111,42 @@ export default function Home() {
         )}
       </section>
 
-      {/* Philosophy Section */}
-      <section className="relative py-40 overflow-hidden bg-primary text-white">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-black/5 -skew-x-12 translate-x-1/3" />
+      {/* The Studio Philosophy - Editorial Section */}
+      <section className="relative py-48 overflow-hidden bg-primary text-white">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-black/10 -skew-x-12 translate-x-1/2" />
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center relative z-10">
-          <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden luxury-shadow group">
+          <div className="relative aspect-[4/5] rounded-[4rem] overflow-hidden luxury-shadow group shadow-2xl">
             <Image 
-              src="https://picsum.photos/seed/studio-vibe/800/1000" 
-              alt="The Mogra Studio" 
+              src="https://picsum.photos/seed/studio-philosophy/1000/1250" 
+              alt="The Mogra Studio Interior" 
               fill 
-              className="object-cover transition-transform duration-[3s] group-hover:scale-110"
-              data-ai-hint="luxury boutique"
+              className="object-cover transition-transform duration-[4s] group-hover:scale-110"
+              data-ai-hint="boutique interior"
             />
-            <div className="absolute inset-0 ring-1 ring-inset ring-white/20 rounded-[3rem]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+            <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[4rem]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           </div>
           
-          <div className="space-y-12">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <Clover className="h-6 w-6 text-accent" />
-                <p className="text-[11px] uppercase tracking-[0.5em] font-bold text-accent">The Mogra Philosophy</p>
+          <div className="space-y-14">
+            <div className="space-y-8">
+              <div className="flex items-center gap-4">
+                <Clover className="h-8 w-8 text-accent" />
+                <p className="text-[12px] uppercase tracking-[0.6em] font-bold text-accent">Our Philosophy</p>
               </div>
-              <h2 className="font-headline text-6xl md:text-8xl font-bold leading-[1.05]">Where Fashion Meets <br /> <span className="italic font-normal text-white/90">Soul.</span></h2>
+              <h2 className="font-headline text-7xl md:text-9xl font-bold leading-[0.9] tracking-tight">Fashion <br /> with <span className="italic font-normal opacity-90">Soul.</span></h2>
             </div>
             
-            <div className="space-y-10 text-white/80 text-xl md:text-2xl leading-relaxed font-light">
+            <div className="space-y-12 text-white/80 text-2xl md:text-3xl leading-relaxed font-light italic">
               <p>
-                At Mogra Design Studio, we don't just create clothes; we weave the essence of Bhopal's royal legacy with the freshness of a jasmine bloom.
+                "At Mogra, we don't just create clothes; we weave the essence of Bhopal's royal legacy with the freshness of a jasmine bloom."
               </p>
-              <p>
-                Every pattern is a tribute to the "Nazaakat" of the modern woman. From the bustling lanes of Minal Residency to the wardrobes of the discerning, we bring you couture that breathes.
+              <p className="not-italic text-lg md:text-xl font-body opacity-70">
+                Every pattern is a tribute to the "Nazaakat" of the modern woman. From the bustling lanes of Minal Residency to your wardrobe, we bring couture that breathes.
               </p>
             </div>
             
-            <div className="pt-6">
-              <Button variant="outline" size="lg" className="rounded-full px-16 py-10 border-white/30 text-white hover:bg-white hover:text-primary transition-all duration-700 uppercase tracking-[0.3em] text-[10px] font-bold" asChild>
+            <div className="pt-8">
+              <Button variant="outline" size="lg" className="rounded-full px-20 py-10 border-white/20 text-white hover:bg-white hover:text-primary transition-all duration-700 uppercase tracking-[0.4em] text-[11px] font-bold h-auto" asChild>
                 <Link href="/shop">Explore Our Story</Link>
               </Button>
             </div>
@@ -154,17 +154,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="container mx-auto px-6 text-center py-32 relative">
-        <div className="max-w-5xl mx-auto space-y-16">
-          <div className="space-y-6">
-             <p className="text-[11px] uppercase tracking-[0.5em] font-bold text-primary">Tailoring & Customization</p>
-             <h2 className="font-headline text-6xl md:text-8xl font-bold tracking-tight">Your Dream, <br /> Our Craft.</h2>
+      {/* Call to Action - Bespoke Fitting */}
+      <section className="container mx-auto px-6 text-center py-40 relative">
+        <div className="max-w-6xl mx-auto space-y-20">
+          <div className="space-y-8">
+             <div className="flex items-center justify-center gap-4 text-primary font-bold">
+               <Clover className="h-6 w-6" />
+               <p className="text-[12px] uppercase tracking-[0.6em]">Tailoring & Craft</p>
+             </div>
+             <h2 className="font-headline text-7xl md:text-[9rem] font-bold tracking-tighter leading-none">Your Dream, <br /> Our Craft.</h2>
           </div>
-          <p className="text-muted-foreground text-2xl md:text-3xl font-light leading-relaxed max-w-3xl mx-auto italic">"Whether it's a vision from your imagination or a custom fit for your most precious day, our master tailors await."</p>
-          <div className="pt-10">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-20 py-10 uppercase tracking-[0.3em] text-[11px] font-bold shadow-2xl luxury-shadow" asChild>
-              <Link href="/measurements">Create Your Bespoke Profile</Link>
+          <p className="text-muted-foreground text-2xl md:text-4xl font-light leading-relaxed max-w-4xl mx-auto italic opacity-80">
+            "Whether it's a vision from your imagination or a custom fit for your most precious day, our master tailors await."
+          </p>
+          <div className="pt-12">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-24 py-10 uppercase tracking-[0.4em] text-[12px] font-bold luxury-shadow h-auto" asChild>
+              <Link href="/measurements">Build Your Bespoke Profile</Link>
             </Button>
           </div>
         </div>
