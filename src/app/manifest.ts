@@ -4,11 +4,11 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Mogra Design Studio',
     short_name: 'Mogra Studio',
-    description: 'Exquisite Boutique Fashion and Bespoke Dress Patterns from Bhopal. Now Live.',
+    description: 'Exquisite Boutique Fashion and Bespoke Dress Patterns from Bhopal.',
     start_url: '/',
     display: 'standalone',
     background_color: '#fdfcf9',
-    theme_color: '#3d441e',
+    theme_color: '#1e240f', // Army Green
     icons: [
       {
         src: 'https://picsum.photos/seed/mogra-icon/192/192',

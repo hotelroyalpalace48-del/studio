@@ -9,11 +9,11 @@ import { MograLogo } from '@/components/logo';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Mogra Design Studio | Live Now: Exquisite Boutique Fashion & Bespoke Tailoring',
+    default: 'Mogra Design Studio | Exquisite Boutique Fashion & Bespoke Tailoring',
     template: '%s | Mogra Design Studio'
   },
-  description: 'Mogra Design Studio Bhopal is now LIVE. Explore our curated collection of handcrafted dress patterns, boutique items, and elegant fashion designs. Experience the essence of Nazaakat with bespoke tailoring from the heart of Minal Residency.',
-  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Live Now', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal', 'Custom Dress Bhopal'],
+  description: 'Mogra Design Studio Bhopal. Explore our curated collection of handcrafted dress patterns, boutique items, and elegant fashion designs. Experience the essence of Nazaakat with bespoke tailoring.',
+  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal', 'Custom Dress Bhopal'],
   authors: [{ name: 'Mogra Design Studio' }],
   openGraph: {
     title: 'Mogra Design Studio | Now Live: Exquisite Boutique Fashion',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         url: 'https://picsum.photos/seed/mogra-og/1200/630',
         width: 1200,
         height: 630,
-        alt: 'Mogra Design Studio Collection - Live Now',
+        alt: 'Mogra Design Studio Collection',
       },
     ],
     locale: 'en_IN',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#3d441e',
+  themeColor: '#1e240f', // Army Green
   width: 'device-width',
   initialScale: 1,
 };

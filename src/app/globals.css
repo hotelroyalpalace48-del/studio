@@ -4,25 +4,26 @@
 
 @layer base {
   :root {
+    /* Army Green & Jasmine Cream Palette */
     --background: 60 20% 98%;
-    --foreground: 90 30% 10%;
+    --foreground: 95 25% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 90 30% 10%;
+    --card-foreground: 95 25% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 90 30% 10%;
-    --primary: 90 25% 25%;
+    --popover-foreground: 95 25% 10%;
+    --primary: 95 25% 18%; /* Deep Army Green */
     --primary-foreground: 60 20% 98%;
-    --secondary: 90 15% 94%;
-    --secondary-foreground: 90 25% 25%;
-    --muted: 90 10% 92%;
-    --muted-foreground: 90 10% 45%;
-    --accent: 40 30% 50%;
+    --secondary: 95 15% 92%;
+    --secondary-foreground: 95 25% 18%;
+    --muted: 95 10% 90%;
+    --muted-foreground: 95 10% 40%;
+    --accent: 35 25% 45%; /* Earthy Bronze */
     --accent-foreground: 60 20% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 90 15% 90%;
-    --input: 90 15% 90%;
-    --ring: 90 25% 25%;
+    --border: 95 15% 88%;
+    --input: 95 15% 88%;
+    --ring: 95 25% 18%;
     --radius: 2rem;
   }
 }
@@ -53,7 +54,7 @@
     box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08);
   }
   .ethereal-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(90, 25%, 35%));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(95, 25%, 25%));
   }
 }
 
