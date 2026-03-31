@@ -4,42 +4,28 @@
 import { cn } from "@/lib/utils"
 
 /**
- * A realistic Mogra (Jasmine) flower SVG logo.
- * Designed to be delicate, multi-petaled, and organic.
+ * Mogra Design Studio Logo
+ * A minimalist, symmetric floral silhouette matching the brand identity.
  */
 export function MograLogo({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 100 100"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("w-6 h-6", className)}
     >
-      {/* Outer Petals */}
-      <path
-        d="M50 10C55 25 70 30 85 35C70 40 65 55 60 70C55 55 40 50 25 45C40 40 45 25 50 10Z"
-        fill="currentColor"
-        fillOpacity="0.4"
-      />
-      {/* Mid-Layer Petals */}
-      <path
-        d="M50 20C53 32 65 35 75 38C65 41 62 53 58 65C53 53 41 50 30 47C41 44 44 32 50 20Z"
-        fill="currentColor"
-        fillOpacity="0.6"
-      />
-      {/* Inner Petal Cluster */}
-      <circle cx="50" cy="42" r="8" fill="currentColor" fillOpacity="0.8" />
-      <path
-        d="M50 30C52 38 58 40 62 42C58 44 56 50 54 55C52 47 46 45 40 44C46 42 48 38 50 30Z"
-        fill="currentColor"
-      />
-      {/* Stem / Sepal detail */}
-      <path
-        d="M48 65C48 65 45 85 45 90C45 95 55 95 55 90C55 85 52 65 52 65"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      {/* Stem */}
+      <rect x="47" y="82" width="6" height="12" rx="3" />
+      
+      {/* Symmetrical Leaves */}
+      <path d="M50 82 C30 82, 22 68, 22 62 C22 55, 35 52, 50 62 C65 52, 78 55, 78 62 C78 68, 70 82, 50 82 Z" />
+      
+      {/* Symmetrical 3-Lobed Flower Head */}
+      <path d="M50 62 C22 62, 18 45, 18 35 C18 20, 35 15, 50 15 C65 15, 82 20, 82 35 C82 45, 78 62, 50 62 Z" />
+      
+      {/* Central Circle Cutout */}
+      <circle cx="50" cy="38" r="8" fill="hsl(var(--background))" />
     </svg>
   )
 }
