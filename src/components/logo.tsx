@@ -3,20 +3,43 @@
 
 import { cn } from "@/lib/utils"
 
+/**
+ * A realistic Mogra (Jasmine) flower SVG logo.
+ * Designed to be delicate, multi-petaled, and organic.
+ */
 export function MograLogo({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 100 100"
-      fill="currentColor"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("w-6 h-6", className)}
     >
-      <path d="M50 85C50 85 50 65 50 55C50 45 50 35 50 25" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
-      <path d="M50 75C40 75 30 70 25 60C25 60 40 55 50 65" fill="currentColor" />
-      <path d="M50 75C60 75 70 70 75 60C75 60 60 55 50 65" fill="currentColor" />
-      <path d="M50 15C35 15 25 25 25 40C25 55 35 65 50 65C65 65 75 55 75 40C75 25 65 15 50 15ZM50 48C45.5817 48 42 44.4183 42 40C42 35.5817 45.5817 32 50 32C54.4183 32 58 35.5817 58 40C58 44.4183 54.4183 48 50 48Z" fill="currentColor" />
-      <path d="M25 40C15 40 10 30 10 20C10 10 20 10 25 20C25 30 25 40 25 40Z" fill="currentColor" />
-      <path d="M75 40C85 40 90 30 90 20C90 10 80 10 75 20C75 30 75 40 75 40Z" fill="currentColor" />
+      {/* Outer Petals */}
+      <path
+        d="M50 10C55 25 70 30 85 35C70 40 65 55 60 70C55 55 40 50 25 45C40 40 45 25 50 10Z"
+        fill="currentColor"
+        fillOpacity="0.4"
+      />
+      {/* Mid-Layer Petals */}
+      <path
+        d="M50 20C53 32 65 35 75 38C65 41 62 53 58 65C53 53 41 50 30 47C41 44 44 32 50 20Z"
+        fill="currentColor"
+        fillOpacity="0.6"
+      />
+      {/* Inner Petal Cluster */}
+      <circle cx="50" cy="42" r="8" fill="currentColor" fillOpacity="0.8" />
+      <path
+        d="M50 30C52 38 58 40 62 42C58 44 56 50 54 55C52 47 46 45 40 44C46 42 48 38 50 30Z"
+        fill="currentColor"
+      />
+      {/* Stem / Sepal detail */}
+      <path
+        d="M48 65C48 65 45 85 45 90C45 95 55 95 55 90C55 85 52 65 52 65"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }
