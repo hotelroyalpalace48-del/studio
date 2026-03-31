@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Exquisite Boutique Fashion and Bespoke Dress Patterns from Bhopal. Now Live.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#ffffff',
-    theme_color: '#1b4d3e',
+    background_color: '#fdfcf9',
+    theme_color: '#1a1f33',
     icons: [
       {
         src: 'https://picsum.photos/seed/mogra-icon/192/192',
