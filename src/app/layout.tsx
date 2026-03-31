@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: '%s | Mogra Design Studio'
   },
   description: 'Mogra Design Studio Bhopal. Explore our curated collection of handcrafted dress patterns, boutique items, and elegant fashion designs. Experience the essence of Nazaakat with bespoke tailoring.',
-  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal', 'Custom Dress Bhopal'],
+  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal', 'Custom Dress Bhopal', 'Bagh Print'],
   authors: [{ name: 'Mogra Design Studio' }],
   openGraph: {
     title: 'Mogra Design Studio | Now Live: Exquisite Boutique Fashion',
@@ -63,7 +63,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased flex flex-col min-h-screen relative overflow-x-hidden">
+      <body className="font-body antialiased flex flex-col min-h-screen relative overflow-x-hidden bg-bagh-print">
         <FirebaseClientProvider>
           {/* Immersive Ethereal Background Watermark */}
           <div className="fixed inset-0 pointer-events-none -z-20 flex items-center justify-center overflow-hidden opacity-[0.03] select-none">
