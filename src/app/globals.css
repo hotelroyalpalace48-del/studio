@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 45 25% 98%;
-    --foreground: 230 40% 10%;
+    --background: 60 20% 98%;
+    --foreground: 90 30% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 230 40% 10%;
+    --card-foreground: 90 30% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 230 40% 10%;
-    --primary: 230 40% 15%;
-    --primary-foreground: 45 25% 98%;
-    --secondary: 230 10% 95%;
-    --secondary-foreground: 230 40% 15%;
-    --muted: 230 5% 92%;
-    --muted-foreground: 230 5% 45%;
-    --accent: 40 45% 55%;
-    --accent-foreground: 45 25% 98%;
+    --popover-foreground: 90 30% 10%;
+    --primary: 90 25% 25%;
+    --primary-foreground: 60 20% 98%;
+    --secondary: 90 15% 94%;
+    --secondary-foreground: 90 25% 25%;
+    --muted: 90 10% 92%;
+    --muted-foreground: 90 10% 45%;
+    --accent: 40 30% 50%;
+    --accent-foreground: 60 20% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 230 15% 90%;
-    --input: 230 15% 90%;
-    --ring: 230 40% 15%;
+    --border: 90 15% 90%;
+    --input: 90 15% 90%;
+    --ring: 90 25% 25%;
     --radius: 2rem;
   }
 }
@@ -53,7 +53,7 @@
     box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08);
   }
   .ethereal-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(230, 40%, 25%));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(90, 25%, 35%));
   }
 }
 
