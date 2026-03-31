@@ -9,23 +9,23 @@ import { MograLogo } from '@/components/logo';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Mogra Design Studio | Exquisite Boutique Fashion & Bespoke Tailoring',
+    default: 'Mogra Design Studio | Now Live: Exquisite Boutique Fashion',
     template: '%s | Mogra Design Studio'
   },
-  description: 'Mogra Design Studio Bhopal. Explore our curated collection of handcrafted dress patterns, boutique items, and elegant fashion designs. Experience the essence of Nazaakat with bespoke tailoring.',
-  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal', 'Custom Dress Bhopal', 'Bagh Print'],
+  description: 'Official Online Studio for Mogra Bhopal. Explore our curated collection of handcrafted dress patterns and elegant fashion designs. Now Live for global orders and bespoke tailoring.',
+  keywords: ['Mogra Design Studio', 'Boutique Bhopal', 'Dress Patterns', 'Bespoke Tailoring', 'Ethnic Wear', 'Fashion Design', 'Mogra Bhopal', 'Live Now', 'Custom Dress'],
   authors: [{ name: 'Mogra Design Studio' }],
   openGraph: {
-    title: 'Mogra Design Studio | Now Live: Exquisite Boutique Fashion',
+    title: 'Mogra Design Studio | Official Studio Now Live',
     description: 'Handcrafted silhouettes and bespoke tailoring from the heart of Bhopal. Our official studio is now online.',
     url: 'https://mogradesignstudio.com',
     siteName: 'Mogra Design Studio',
     images: [
       {
-        url: 'https://picsum.photos/seed/mogra-og/1200/630',
+        url: 'https://picsum.photos/seed/mogra-live-og/1200/630',
         width: 1200,
         height: 630,
-        alt: 'Mogra Design Studio Collection',
+        alt: 'Mogra Design Studio - Now Live',
       },
     ],
     locale: 'en_IN',
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Mogra Design Studio | Now Live',
-    description: 'Ethereal Nazaakat in every stitch. Discover our latest collections in Bhopal.',
-    images: ['https://picsum.photos/seed/mogra-twitter/1200/630'],
+    description: 'Ethereal Nazaakat in every stitch. Discover our latest collections online.',
+    images: ['https://picsum.photos/seed/mogra-live-twitter/1200/630'],
   },
   appleWebApp: {
     capable: true,

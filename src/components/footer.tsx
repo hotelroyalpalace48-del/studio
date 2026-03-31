@@ -1,5 +1,4 @@
-
-import { Smartphone, QrCode, Globe } from 'lucide-react'
+import { Smartphone, QrCode, Globe, Download } from 'lucide-react'
 import Image from 'next/image'
 import { PlaceHolderImages } from '@/app/lib/placeholder-images'
 import { MograLogo } from '@/components/logo'
@@ -62,22 +61,14 @@ export function Footer() {
             
             <div className="mt-8 pt-6 border-t border-muted">
               <h4 className="font-bold mb-4 uppercase tracking-widest text-[9px] flex items-center gap-2">
-                <Smartphone className="h-3.5 w-3.5" /> Studio App
+                <Smartphone className="h-3.5 w-3.5" /> Studio App (Live)
               </h4>
               <div className="flex gap-4 items-center">
-                <div className="flex flex-col gap-2">
-                  <div className="h-9 w-28 bg-black rounded-lg flex items-center justify-center text-[9px] text-white font-bold cursor-pointer hover:opacity-80 transition-opacity">
-                    App Store
-                  </div>
-                  <div className="h-9 w-28 bg-black rounded-lg flex items-center justify-center text-[9px] text-white font-bold cursor-pointer hover:opacity-80 transition-opacity">
-                    Google Play
-                  </div>
-                </div>
                 <div className="p-2 bg-white rounded-2xl border border-primary/10 luxury-shadow group relative">
                   <div className="relative w-20 h-20">
                     <Image 
                       src={qrImage}
-                      alt="Scan to Download Mogra App"
+                      alt="Scan to Install Mogra App"
                       fill
                       className="object-cover opacity-70 grayscale transition-all group-hover:grayscale-0 group-hover:opacity-100"
                       data-ai-hint="qr code"
@@ -86,6 +77,14 @@ export function Footer() {
                   <div className="mt-1 flex items-center justify-center gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
                     <QrCode className="h-2 w-2 text-primary" />
                     <span className="text-[6px] uppercase font-bold text-primary">Scan to install</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-[9px] text-muted-foreground leading-tight italic max-w-[100px]">
+                    Install directly to your home screen for the full boutique experience.
+                  </p>
+                  <div className="flex items-center gap-1 text-[8px] font-bold text-primary uppercase tracking-widest">
+                    <Download className="h-2 w-2" /> App Ready
                   </div>
                 </div>
               </div>
@@ -107,7 +106,7 @@ export function Footer() {
         </div>
         <div className="border-t mt-20 pt-10 text-center">
           <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
-            © {new Date().getFullYear()} Mogra Design Studio. Crafted in Bhopal with Love.
+            © {new Date().getFullYear()} Mogra Design Studio. Crafted in Bhopal with Love. Now Live.
           </p>
         </div>
       </div>
