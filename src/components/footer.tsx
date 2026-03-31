@@ -1,6 +1,8 @@
-import { Smartphone, Clover, QrCode, Globe } from 'lucide-react'
+
+import { Smartphone, QrCode, Globe } from 'lucide-react'
 import Image from 'next/image'
 import { PlaceHolderImages } from '@/app/lib/placeholder-images'
+import { MograLogo } from '@/components/logo'
 
 export function Footer() {
   const qrImage = PlaceHolderImages.find(img => img.id === 'qr-code')?.imageUrl || 'https://picsum.photos/seed/mogra-qr/200/200'
@@ -13,7 +15,7 @@ export function Footer() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="p-1.5 rounded-full bg-primary/10">
-                <Clover className="h-7 w-7 text-primary" />
+                <MograLogo className="h-7 w-7 text-primary" />
               </div>
               <div className="flex flex-col">
                 <h3 className="font-headline text-2xl font-bold text-primary leading-none uppercase tracking-tighter">Mogra</h3>

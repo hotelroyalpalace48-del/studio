@@ -1,11 +1,13 @@
+
 "use client"
 
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection, query, orderBy } from 'firebase/firestore'
 import { ProductCard } from '@/components/product-card'
 import { Button } from '@/components/ui/button'
-import { SlidersHorizontal, Loader2, SearchX, Clover } from 'lucide-react'
+import { SlidersHorizontal, Loader2, SearchX } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
+import { MograLogo } from '@/components/logo'
 
 export default function ShopPage() {
   const firestore = useFirestore()
@@ -37,7 +39,7 @@ export default function ShopPage() {
       <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-10">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <Clover className="h-6 w-6 text-primary" />
+            <MograLogo className="h-6 w-6 text-primary" />
             <h1 className="font-headline text-6xl md:text-7xl font-bold">Collections</h1>
           </div>
           <div className="flex items-center gap-4">

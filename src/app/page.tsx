@@ -1,14 +1,16 @@
+
 "use client"
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Loader2, Sparkles, Clover } from 'lucide-react'
+import { ArrowRight, Loader2, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ProductCard } from '@/components/product-card'
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection, query, limit, orderBy } from 'firebase/firestore'
 import { PlaceHolderImages } from '@/app/lib/placeholder-images'
 import { DailyShayari } from '@/components/daily-shayari'
+import { MograLogo } from '@/components/logo'
 
 export default function Home() {
   const firestore = useFirestore()
@@ -42,7 +44,7 @@ export default function Home() {
           <div className="flex items-center justify-center gap-6 mb-4 animate-in fade-in slide-in-from-bottom-6 duration-1000">
             <span className="h-px w-16 bg-white/20" />
             <div className="flex items-center gap-3">
-              <Clover className="h-5 w-5 text-accent animate-pulse" />
+              <MograLogo className="h-5 w-5 text-accent animate-pulse" />
               <p className="text-[11px] uppercase tracking-[0.6em] font-bold text-white/80">The Essence of Mogra</p>
             </div>
             <span className="h-px w-16 bg-white/20" />
@@ -132,7 +134,7 @@ export default function Home() {
           <div className="space-y-14">
             <div className="space-y-8">
               <div className="flex items-center gap-4">
-                <Clover className="h-8 w-8 text-accent" />
+                <MograLogo className="h-8 w-8 text-accent" />
                 <p className="text-[12px] uppercase tracking-[0.6em] font-bold text-accent">Our Philosophy</p>
               </div>
               <h2 className="font-headline text-7xl md:text-9xl font-bold leading-[0.9] tracking-tight">Fashion <br /> with <span className="italic font-normal opacity-90">Soul.</span></h2>
@@ -161,7 +163,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto space-y-20">
           <div className="space-y-8">
              <div className="flex items-center justify-center gap-4 text-primary font-bold">
-               <Clover className="h-6 w-6" />
+               <MograLogo className="h-6 w-6" />
                <p className="text-[12px] uppercase tracking-[0.6em]">Tailoring & Craft</p>
              </div>
              <h2 className="font-headline text-7xl md:text-[9rem] font-bold tracking-tighter leading-none">Your Dream, <br /> Our Craft.</h2>

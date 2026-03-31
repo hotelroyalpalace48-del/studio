@@ -1,7 +1,8 @@
+
 "use client"
 
 import { useState, useEffect } from 'react'
-import { ShoppingCart, User, Menu, Search, Ruler, Clover, X, Heart, LogIn, LayoutDashboard } from 'lucide-react'
+import { ShoppingCart, User, Menu, Search, Ruler, X, Heart, LogIn, LayoutDashboard } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -16,6 +17,7 @@ import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import LinkNext from 'next/link'
 import { useUser, useAuth, initiateAnonymousSignIn } from '@/firebase'
+import { MograLogo } from '@/components/logo'
 
 export function Navbar() {
   const { cart } = useCart()
@@ -69,7 +71,7 @@ export function Navbar() {
         <div className="flex items-center gap-12">
           <LinkNext href="/" className="flex items-center space-x-3 group">
             <div className="p-1.5 rounded-full bg-primary/5 transition-colors group-hover:bg-primary/10">
-              <Clover className="h-6 w-6 text-primary transition-transform duration-1000 group-hover:rotate-[360deg]" />
+              <MograLogo className="h-6 w-6 text-primary transition-transform duration-1000 group-hover:rotate-[360deg]" />
             </div>
             <div className="flex flex-col">
               <span className="font-headline text-xl md:text-2xl font-bold text-primary tracking-tight uppercase leading-none">Mogra</span>

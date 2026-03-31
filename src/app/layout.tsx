@@ -1,3 +1,4 @@
+
 import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
@@ -5,7 +6,7 @@ import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
 import { PWAInstall } from '@/components/pwa-install';
-import { Clover } from 'lucide-react';
+import { MograLogo } from '@/components/logo';
 
 export const metadata: Metadata = {
   title: {
@@ -68,7 +69,7 @@ export default function RootLayout({
           {/* Immersive Ethereal Background Watermark */}
           <div className="fixed inset-0 pointer-events-none -z-20 flex items-center justify-center overflow-hidden opacity-[0.03] select-none">
             <div className="flex flex-col items-center animate-ethereal">
-              <Clover className="w-[40vw] h-[40vw] text-primary" strokeWidth={0.3} />
+              <MograLogo className="w-[40vw] h-[40vw] text-primary" />
               <span className="text-[35vw] font-headline font-bold uppercase tracking-tighter text-primary whitespace-nowrap text-3d-mogra -mt-[12vw]">
                 Mogra
               </span>
